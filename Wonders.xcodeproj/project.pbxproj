@@ -20,6 +20,8 @@
 		79876A9A2110F38C00141011 /* CommandLineWondersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A992110F38C00141011 /* CommandLineWondersTests.swift */; };
 		79876AA02110F3C100141011 /* BoardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A9F2110F3C100141011 /* BoardPresenter.swift */; };
 		79876AA12110F42600141011 /* BoardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A9F2110F3C100141011 /* BoardPresenter.swift */; };
+		79876AA42114EDBC00141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
+		79876AA52114EDC400141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,7 @@
 		79876A992110F38C00141011 /* CommandLineWondersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineWondersTests.swift; sourceTree = "<group>"; };
 		79876A9B2110F38C00141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79876A9F2110F3C100141011 /* BoardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPresenter.swift; sourceTree = "<group>"; };
+		79876AA32114EDBC00141011 /* OptionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +176,7 @@
 			children = (
 				79876A6B2110E31700141011 /* main.swift */,
 				79876A9F2110F3C100141011 /* BoardPresenter.swift */,
+				79876AA32114EDBC00141011 /* OptionsPresenter.swift */,
 			);
 			path = CommandLineWonders;
 			sourceTree = "<group>";
@@ -452,6 +456,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79876A6C2110E31700141011 /* main.swift in Sources */,
+				79876AA42114EDBC00141011 /* OptionsPresenter.swift in Sources */,
 				79876AA02110F3C100141011 /* BoardPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79876A9A2110F38C00141011 /* CommandLineWondersTests.swift in Sources */,
+				79876AA52114EDC400141011 /* OptionsPresenter.swift in Sources */,
 				79876AA12110F42600141011 /* BoardPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

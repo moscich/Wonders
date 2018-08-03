@@ -4,10 +4,63 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CommandLineWonders.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>CommandLineWondersTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>Wonders.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>WondersTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Wonders_Mac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>79876A29210CCA3600141011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79876A32210CCA3600141011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79876A682110E31700141011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79876A762110E52600141011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79876A7E2110E52600141011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79876A962110F38C00141011</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

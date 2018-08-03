@@ -6,7 +6,7 @@ class ConsoleInteractor: PlayerInteractor {
         print("choose action")
         let string = readLine()
         
-        action(CardTakeAction(requestedCardNo: Int(string!)!))
+//        action(CardTakeAction(requestedCardNo: Int(string!)!))
     }
 }
 

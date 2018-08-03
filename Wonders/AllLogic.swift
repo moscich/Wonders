@@ -128,7 +128,7 @@ class RandomCardProvider: CardProvider {
 }
 
 public class Game {
-    let board: Board
+    public let board: Board
     let player1Interactor: PlayerInteractor
     let player2Interactor: PlayerInteractor
     var player1 = Player()
@@ -144,6 +144,10 @@ public class Game {
         self.boardFactory = boardFactory
         self.board = boardFactory.firstEpohBoard
         player1.requestAction(game: self, action: actionHey())
+    }
+    
+    convenience public init(player1: PlayerInteractor, player2: PlayerInteractor, cardProvider: CardProvider) {
+        self.init(player1: player1, player2: player2, boardFactory: DefaultBoardFactory(cardProvider: cardProvider))
     }
     
     convenience public init(player1: PlayerInteractor, player2: PlayerInteractor) {
@@ -190,14 +194,20 @@ struct TestAction: Action {
     
 }
 
-class Board {
+public class Board {
     var cards: [CardOnBoard?]
     init(cards: [CardOnBoard?]) {
         self.cards = cards
     }
     
-    func getCard(at index: Int) -> Card {
-        return Card(name: "", cost: Resource(), providedResource: Resource())
+    public var availableCards: [Card] {
+        return cards.filter({ cardOnBoard -> Bool in
+            cardOnBoard != nil
+        }).filter({ cardOnBoard -> Bool in
+            cardOnBoard!.descendants.isEmpty
+        }).map({ cardOnBoard -> Card in
+            return cardOnBoard!.card
+        })
     }
     
     func claimCard(_ card: Card) -> Bool {
@@ -216,18 +226,10 @@ class Board {
         return true
     }
     
-    var availableCards: [Card] {
-        return cards.filter({ cardOnBoard -> Bool in
-            cardOnBoard != nil
-        }).filter({ cardOnBoard -> Bool in
-            cardOnBoard!.descendants.isEmpty
-        }).map({ cardOnBoard -> Card in
-            return cardOnBoard!.card
-        })
-    }
+    
 }
 
-protocol CardProvider {
+public protocol CardProvider {
     var firstEpohRandomisedCards: [Card] { get }
 }
 

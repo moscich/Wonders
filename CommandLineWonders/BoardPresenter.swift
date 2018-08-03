@@ -1,11 +1,40 @@
 import Foundation
 import Wonders_Mac
 
+let welcomeMessage = "Hello! Options:\ncard: Take available card"
+let unknownActionMessage = "Error Unrecognized command"
+
 protocol StringOutput {
     func print(_ string: String)
 }
 
-class BoardPresenter {
+protocol StringCommandHandler {
+    func command(_ command: String, action: @escaping (Action) -> ())
+}
+
+protocol BoardPresenter: StringCommandHandler {
+    func presentAvailableCards()
+    func getCard(index: UInt8) -> Card?
+}
+
+class DefaultBoardPresenter: BoardPresenter {
+    func command(_ command: String, action: @escaping (Action) -> ()) {
+        action(CardTakeAction(requestedCard: getCard(index: UInt8(command)! - 1)!))
+    }
+    
+    func getCard(index: UInt8) -> Card? {
+        if board.availableCards.count > index {
+            return board.availableCards[Int(index)]
+        }
+        return nil
+    }
+    
+    func presentAvailableCards() {
+        for (index, card) in board.availableCards.enumerated() {
+            output.print("\(index + 1). \(card.name)")
+        }
+    }
+    
     let output: StringOutput
     let board: Board
     
@@ -14,15 +43,4 @@ class BoardPresenter {
         self.board = board
     }
     
-    func showAvailableCards() {
-        if board.cards.isEmpty {
-            output.print("No Cards")
-            return
-        }
-        for (index, boardCard) in board.cards.enumerated() {
-            if let card = boardCard?.card {
-                output.print("\(index + 1). \(card.name)")
-            }
-        }
-    }
 }
