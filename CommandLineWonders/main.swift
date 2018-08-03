@@ -1,12 +1,19 @@
 import Foundation
 import Wonders_Mac
 
+class StandardOutput: StringOutput {
+    func print(_ string: String) {
+        print(string)
+    }
+}
+
 class ConsoleInteractor: PlayerInteractor {
     func requestAction(game: Game, action: @escaping (Action) -> ()) {
-        print("choose action")
-        let string = readLine()
-        
-//        action(CardTakeAction(requestedCardNo: Int(string!)!))
+        let presenter = OptionsPresenter(game: game, output: StandardOutput(), boardPresenter: DefaultBoardPresenter(board: game.board, output: StandardOutput()))
+        var string: String
+        repeat {
+            string = readLine()!
+        } while presenter.command(string, action: action)
     }
 }
 

@@ -13,13 +13,14 @@ class OptionsPresenter: StringCommandHandler {
         output.print(welcomeMessage)
     }
     
-    func command(_ command: String, action: @escaping (Action) -> ()) {
-        guard currentCommandHandler == nil else { currentCommandHandler?.command(command, action: action); return }
+    func command(_ command: String, action: @escaping (Action) -> ()) -> Bool {
+        guard currentCommandHandler == nil else { return currentCommandHandler?.command(command, action: action) ?? false }
         if command == "card" {
             boardPresenter.presentAvailableCards()
             currentCommandHandler = boardPresenter
         } else {
             output.print(unknownActionMessage)
         }
+        return false
     }
 }

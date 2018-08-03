@@ -9,7 +9,7 @@ protocol StringOutput {
 }
 
 protocol StringCommandHandler {
-    func command(_ command: String, action: @escaping (Action) -> ())
+    func command(_ command: String, action: @escaping (Action) -> ()) -> Bool
 }
 
 protocol BoardPresenter: StringCommandHandler {
@@ -18,8 +18,9 @@ protocol BoardPresenter: StringCommandHandler {
 }
 
 class DefaultBoardPresenter: BoardPresenter {
-    func command(_ command: String, action: @escaping (Action) -> ()) {
+    func command(_ command: String, action: @escaping (Action) -> ()) -> Bool {
         action(CardTakeAction(requestedCard: getCard(index: UInt8(command)! - 1)!))
+        return true
     }
     
     func getCard(index: UInt8) -> Card? {

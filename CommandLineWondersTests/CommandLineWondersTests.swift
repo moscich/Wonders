@@ -41,9 +41,10 @@ class TestCardProvider: CardProvider {
 }
 
 class TestBoardPresenter: BoardPresenter {
-    func command(_ command: String, action: @escaping (Action) -> ()) {
+    func command(_ command: String, action: @escaping (Action) -> ()) -> Bool {
         passedAction = action
         passedCommand = command
+        return false
     }
     
     var presentAvailableCardsCalled = false
