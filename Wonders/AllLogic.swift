@@ -241,12 +241,37 @@ class DefaultBoardFactory: BoardFactory {
         self.cardProvider = cardProvider
     }
     var firstEpohBoard: Board {
-        // TODO
-        var cards = [CardOnBoard]()
-        for _ in 0...19 {
-            cards.append(CardOnBoard(hidden: true, descendants: []))
+        let cards = cardProvider.firstEpohRandomisedCards
+        
+        var rows = [[CardOnBoard]]()
+        
+        for row in 0...4 {
+            let rowCards = cards[startingCardIndex(for: row)...startingCardIndex(for: row) + 1 + row].map { card -> CardOnBoard in
+                CardOnBoard(card: card, hidden: row % 2 == 1, descendants: [])
+            }
+            rows.append(rowCards)
         }
-        return Board(cards: cards)
+        
+        var cardsOnBoard = [CardOnBoard]()
+        for (index, row) in rows.enumerated() {
+            cardsOnBoard.append(contentsOf: row)
+            guard let previousRow = index > 0 ? rows[index - 1] : nil else { continue }
+            for (index, card) in previousRow.enumerated() {
+                card.descendants = [row[index], row[index + 1]]
+            }
+        }
+      
+        return Board(cards: cardsOnBoard)
+    }
+    
+    private func startingCardIndex(for row: Int) -> Int {
+        if row == 0 {
+            return 0
+        } else if row == 1 {
+            return 2
+        } else {
+            return startingCardIndex(for:row - 1) + row + 1
+        }
     }
 }
 

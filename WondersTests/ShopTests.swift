@@ -122,19 +122,6 @@ class TestCardProvider: CardProvider {
 }
 
 class BoardFactoryTests: XCTestCase {
-    func testFirstEpohBoard_firstCard() {
-        let boardFactory = DefaultBoardFactory(cardProvider: TestCardProvider())
-        let firstBoard = boardFactory.firstEpohBoard
-        let firstCardOnBoard = firstBoard.cards[0]
-        if let firstCardOnBoard = firstCardOnBoard {
-            XCTAssertEqual(firstCardOnBoard.descendants.count, 0)
-            XCTAssertNotNil(firstCardOnBoard.card)
-            XCTAssertTrue(firstCardOnBoard.hidden)
-        } else {
-            XCTFail()
-        }
-    }
-    
     func testFirstEpoh() {
         let boardFactory = DefaultBoardFactory(cardProvider: TestCardProvider())
         let firstBoard = boardFactory.firstEpohBoard
@@ -142,8 +129,43 @@ class BoardFactoryTests: XCTestCase {
             guard let leftName = left?.card.name, let rightName = left?.card.name else { return false }
             return Int(leftName) ?? 0 < Int(rightName) ?? 0
         }
-        let firstCardOnBoard = cardsOnBoard.first
-        XCTAssertEqual(firstCardOnBoard??.descendants.count, 2)
+        let firstCardOnBoard = cardsOnBoard[0]
+        
+        XCTAssertFalse(firstCardOnBoard?.hidden ?? true)
+        XCTAssertEqual(firstCardOnBoard?.descendants.count, 2)
+        XCTAssertTrue(firstCardOnBoard?.descendants.hasCardNamed("3") ?? false)
+        XCTAssertTrue(firstCardOnBoard?.descendants.hasCardNamed("4") ?? false)
+        
+        let secondCardOnBoard = cardsOnBoard[1]
+        XCTAssertFalse(secondCardOnBoard?.hidden ?? true)
+        XCTAssertEqual(secondCardOnBoard?.descendants.count, 2)
+        XCTAssertTrue(secondCardOnBoard?.descendants.hasCardNamed("4") ?? false)
+        XCTAssertTrue(secondCardOnBoard?.descendants.hasCardNamed("5") ?? false)
+        
+        let fourthCardOnBoard = cardsOnBoard[3]
+        XCTAssertTrue(fourthCardOnBoard?.hidden ?? false)
+        XCTAssertEqual(fourthCardOnBoard?.descendants.count, 2)
+        XCTAssertTrue(fourthCardOnBoard?.descendants.hasCardNamed("7") ?? false)
+        XCTAssertTrue(fourthCardOnBoard?.descendants.hasCardNamed("8") ?? false)
+        
+        let thirteenthCardOnBoard = cardsOnBoard[12]
+        XCTAssertTrue(thirteenthCardOnBoard?.hidden ?? false)
+        XCTAssertEqual(thirteenthCardOnBoard?.descendants.count, 2)
+        XCTAssertTrue(thirteenthCardOnBoard?.descendants.hasCardNamed("18") ?? false)
+        XCTAssertTrue(thirteenthCardOnBoard?.descendants.hasCardNamed("19") ?? false)
+        
+        let eightteenthCardOnBoard = cardsOnBoard[17]
+        XCTAssertFalse(eightteenthCardOnBoard?.hidden ?? true)
+        XCTAssertEqual(eightteenthCardOnBoard?.descendants.count, 0)
+        
+    }
+}
+
+extension Array where Element:CardOnBoard {
+    func hasCardNamed(_ name: String) -> Bool {
+        return contains(where: { cardOnBoard -> Bool in
+            cardOnBoard.card.name == name
+        })
     }
 }
 
