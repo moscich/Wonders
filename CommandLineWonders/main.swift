@@ -26,6 +26,8 @@ class ConsoleInteractor: PlayerInteractor {
     }
 }
 
+let deck = Deck()
+
 let consoleInteractor1 = ConsoleInteractor(name: "First")
 let consoleInteractor2 = ConsoleInteractor(name: "Second")
 let game = Game(player1: consoleInteractor1, player2: consoleInteractor2)

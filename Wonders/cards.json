@@ -1,0 +1,27 @@
+{
+    "epohs":[
+             [
+              {
+              "name":"wycinka",
+              "provide":{
+              "wood":1
+              }
+              },
+              {
+              "name":"skład drewna",
+              "provide":{
+              "wood":1
+              },
+              "cost":{
+              "gold":1
+              }
+              }
+              ],
+             [
+             
+             ],
+             [
+             
+             ]
+             ]
+}

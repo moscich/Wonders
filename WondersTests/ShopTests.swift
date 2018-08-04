@@ -288,3 +288,76 @@ class BoardTests: XCTestCase {
         XCTAssertEqual(availableCards.first?.name, "First Test Card")
     }
 }
+
+struct CardStore: Decodable {
+    let epohs: [Epoh]
+}
+
+struct Epoh: Decodable {
+    let cards: [Card]
+}
+
+class RandomCardProvider: CardProvider {
+    let store: CardStore
+    let count: Int
+    let randomSequence: (Int) -> [Int]
+    convenience init(count: Int, file: String) {
+        self.init(count: count, file: file) { count -> [Int] in
+            Array(0...count-1).shuffled()
+        }
+    }
+    
+    init(count: Int, file: String, randomSequence: @escaping (Int) -> [Int]) {
+        self.count = count
+        self.randomSequence = randomSequence
+        let url = Bundle(for: type(of: self)).url(forResource: file, withExtension: nil)
+        let data = try? Data(contentsOf: url!)
+        store = try! JSONDecoder().decode(CardStore.self, from: data!)
+    }
+    
+    var firstEpohRandomisedCards: [Card] {
+        return randomSequence(count).map { index -> Card in
+            (store.epohs.first?.cards[index])!
+        }
+    }
+}
+
+class RandomCardProviderTests: XCTestCase {
+    func testOneCardProvider() {
+        let cardProvider = RandomCardProvider(count: 1, file: "one_card.json")
+        if let card = cardProvider.firstEpohRandomisedCards.first {
+            XCTAssertEqual(card.name, "Test")
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testOneCardLimited() {
+        let cardProvider = RandomCardProvider(count: 1, file: "two_cards.json")
+        XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 1)
+        if let card = cardProvider.firstEpohRandomisedCards.first {
+            XCTAssertEqual(card.name, "Test")
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testTwoCardsShuffled() {
+        let cardProvider = RandomCardProvider(count: 2, file: "two_cards.json") { _ in [1, 0] }
+        XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 2)
+        
+        XCTAssertEqual(cardProvider.firstEpohRandomisedCards[0].name, "Test2")
+        XCTAssertEqual(cardProvider.firstEpohRandomisedCards[1].name, "Test")
+    }
+}
+
+class TestDeck: XCTestCase {
+    func testOneCardDeck() {
+//        let deck = Deck()//from: Bundle(for: type(of: self)).path(forResource: "test.json", ofType: nil)!)
+        let url = Bundle(for: type(of: self)).url(forResource: "one_card.json", withExtension: nil)
+        let data = try? Data(contentsOf: url!)
+        let store = try! JSONDecoder().decode(CardStore.self, from: data!)
+//        XCTAssertEqual(deck.firstEpoh.count, 1)
+//        Bundle(for: type(of: self)).path(forResource: <#T##String?#>, ofType: <#T##String?#>)
+    }
+}

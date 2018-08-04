@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		797902F221159ABB0061875D /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
+		797902F42115FB9F0061875D /* cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F32115FB9F0061875D /* cards.json */; };
+		797902F52115FB9F0061875D /* cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F32115FB9F0061875D /* cards.json */; };
+		797902F72115FD340061875D /* one_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F62115FD340061875D /* one_card.json */; };
+		797902F9211602C40061875D /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F8211602C40061875D /* test.json */; };
 		79876A34210CCA3600141011 /* Wonders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A2A210CCA3600141011 /* Wonders.framework */; };
 		79876A3B210CCA3600141011 /* Wonders.h in Headers */ = {isa = PBXBuildFile; fileRef = 79876A2D210CCA3600141011 /* Wonders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79876A45210CCA6B00141011 /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
@@ -22,6 +26,7 @@
 		79876AA12110F42600141011 /* BoardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A9F2110F3C100141011 /* BoardPresenter.swift */; };
 		79876AA42114EDBC00141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
 		79876AA52114EDC400141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
+		79FD1381211620B6001DFE53 /* two_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 79FD1380211620B6001DFE53 /* two_cards.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		797902F32115FB9F0061875D /* cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cards.json; sourceTree = "<group>"; };
+		797902F62115FD340061875D /* one_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = one_card.json; sourceTree = "<group>"; };
+		797902F8211602C40061875D /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		79876A2A210CCA3600141011 /* Wonders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wonders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79876A2D210CCA3600141011 /* Wonders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wonders.h; sourceTree = "<group>"; };
 		79876A2E210CCA3600141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -73,6 +81,7 @@
 		79876A9B2110F38C00141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79876A9F2110F3C100141011 /* BoardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPresenter.swift; sourceTree = "<group>"; };
 		79876AA32114EDBC00141011 /* OptionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPresenter.swift; sourceTree = "<group>"; };
+		79FD1380211620B6001DFE53 /* two_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = two_cards.json; path = "../../../../Creative Cloud Files/two_cards.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +166,7 @@
 				79876A2D210CCA3600141011 /* Wonders.h */,
 				79876A2E210CCA3600141011 /* Info.plist */,
 				79876A702110E4A000141011 /* AllLogic.swift */,
+				797902F32115FB9F0061875D /* cards.json */,
 			);
 			path = Wonders;
 			sourceTree = "<group>";
@@ -166,6 +176,9 @@
 			children = (
 				79876A3A210CCA3600141011 /* Info.plist */,
 				79876A44210CCA6B00141011 /* ShopTests.swift */,
+				797902F62115FD340061875D /* one_card.json */,
+				797902F8211602C40061875D /* test.json */,
+				79FD1380211620B6001DFE53 /* two_cards.json */,
 			);
 			path = WondersTests;
 			sourceTree = "<group>";
@@ -399,6 +412,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797902F42115FB9F0061875D /* cards.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,6 +420,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797902F72115FD340061875D /* one_card.json in Resources */,
+				79FD1381211620B6001DFE53 /* two_cards.json in Resources */,
+				797902F9211602C40061875D /* test.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +430,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797902F52115FB9F0061875D /* cards.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
