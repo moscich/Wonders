@@ -28,9 +28,6 @@ class TestInteractor: PlayerInteractor {
 }
 
 class TestCardProvider: CardProvider {
-//    init(firstEpoh: [Card]) {
-//        firstEpohRandomisedCards = firstEpoh
-//    }
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 0...20 {
@@ -41,6 +38,8 @@ class TestCardProvider: CardProvider {
 }
 
 class TestBoardPresenter: BoardPresenter {
+    var availableCards: String = ""
+    
     func command(_ command: String, action: @escaping (Action) -> ()) -> Bool {
         passedAction = action
         passedCommand = command
@@ -60,41 +59,48 @@ class TestBoardPresenter: BoardPresenter {
 }
 
 class OptionsPresenterTests: XCTestCase {
-    func testPresentOptions() {
+    func testListCards() {
         let output = MockOutput()
         let game = Wonders_Mac.Game(player1: TestInteractor(), player2: TestInteractor(), cardProvider: TestCardProvider())
-        let boardPresenter = TestBoardPresenter()
-        let presenter = OptionsPresenter(game: game, output: output, boardPresenter: boardPresenter)
-        XCTAssertEqual(output.printed, "\(welcomeMessage)")
+        let presenter = OptionsPresenter(game: game, output: output)
+        let action = presenter.action(for: "list")
+        XCTAssertNil(action)
+        XCTAssertEqual("\(welcomeMessage)\n1. 15\n2. 16\n3. 17\n4. 18\n5. 19\n6. 20", output.printed)
     }
     
-    func testPresentCards() {
+    func testTakeCard() {
         let output = MockOutput()
         let game = Wonders_Mac.Game(player1: TestInteractor(), player2: TestInteractor(), cardProvider: TestCardProvider())
-        let boardPresenter = TestBoardPresenter()
-        let presenter = OptionsPresenter(game: game, output: output, boardPresenter: boardPresenter)
-        presenter.command("card") { _ in }
-        XCTAssertTrue(boardPresenter.presentAvailableCardsCalled)
-    }
-    
-    func testPresentCardsAndTakeOne() {
-        let output = MockOutput()
-        let game = Wonders_Mac.Game(player1: TestInteractor(), player2: TestInteractor(), cardProvider: TestCardProvider())
-        let boardPresenter = TestBoardPresenter()
-        let presenter = OptionsPresenter(game: game, output: output, boardPresenter: boardPresenter)
-        presenter.command("card") { _ in }
-        presenter.command("1") { _ in }
-        XCTAssertEqual(boardPresenter.passedCommand, "1")
-        XCTAssertNotNil(boardPresenter.passedAction)
+        let presenter = OptionsPresenter(game: game, output: output)
+        let action = presenter.action(for: "take 1")
+        let card = game.board.availableCards.first!
+        if let cardTakeAction = action as? CardTakeAction {
+            XCTAssertEqual(cardTakeAction.requestedCard, card)
+        } else {
+            XCTFail()
+        }
     }
     
     func testNonsenseCommand_1() {
         let output = MockOutput()
         let game = Wonders_Mac.Game(player1: TestInteractor(), player2: TestInteractor(), cardProvider: TestCardProvider())
-        let boardPresenter = TestBoardPresenter()
-        let presenter = OptionsPresenter(game: game, output: output, boardPresenter: boardPresenter)
-        presenter.command("1") { _ in }
+        let presenter = OptionsPresenter(game: game, output: output)
+        let action = presenter.action(for: "1")
+        XCTAssertNil(action)
         XCTAssertEqual(output.printed, "\(welcomeMessage)\n\(unknownActionMessage)")
+    }
+    
+    func testSellCard() {
+        let output = MockOutput()
+        let game = Wonders_Mac.Game(player1: TestInteractor(), player2: TestInteractor(), cardProvider: TestCardProvider())
+        let presenter = OptionsPresenter(game: game, output: output)
+        let action = presenter.action(for: "sell 2")
+        let card = game.board.availableCards[1]
+        if let cardSellAction = action as? CardSellAction {
+            XCTAssertEqual(cardSellAction.requestedCard, card)
+        } else {
+            XCTFail()
+        }
     }
 }
 

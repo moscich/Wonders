@@ -125,7 +125,8 @@ class RandomCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 1...20 {
-            cards.append(Card(name: "\(i)"))
+            
+            cards.append(Card(name: "\(i)", cost: Resource(wood: 1), providedResource: Resource()))
         }
         return cards
     }
@@ -165,15 +166,25 @@ public class Game {
             
             if let cardAction = action as? CardTakeAction {
                 let card = cardAction.requestedCard
-                if self.board.claimCard(cardAction.requestedCard) {
-                    let requiredResources = self.resourceCalculator.requiredResources(for: card, player: self.currentPlayer)
-                    let player2Resources = self.resourceCalculator.concreteResources(in: self.opponent.cards)
-                    let requiredGold = self.shop.resourceCost(requiredResources, oponentResource: player2Resources)
-                    self.currentPlayer.cards.append(card)
-                    self.currentPlayer.gold -= requiredGold
+                let requiredResources = self.resourceCalculator.requiredResources(for: card, player: self.currentPlayer)
+                let player2Resources = self.resourceCalculator.concreteResources(in: self.opponent.cards)
+                let requiredGold = self.shop.resourceCost(requiredResources, oponentResource: player2Resources)
+                if self.currentPlayer.gold >= requiredGold {
+                    if self.board.claimCard(cardAction.requestedCard) {
+                        self.currentPlayer.cards.append(card)
+                        self.currentPlayer.gold -= requiredGold
+                        self.currentPlayer = self.opponent
+                    }
                 }
+            } else if let sellAction = action as? CardSellAction {
+                if self.board.claimCard(sellAction.requestedCard) {
+                    self.currentPlayer.gold += 2
+                    self.currentPlayer = self.opponent
+                }
+            } else if action is TestAction {
+                self.currentPlayer = self.opponent
             }
-            self.currentPlayer = self.opponent
+            
             self.currentInteractor.requestAction(game: self, action: self.actionHey())
         }
     }
@@ -200,7 +211,14 @@ public class Game {
 }
 
 public struct CardTakeAction: Action {
-    let requestedCard: Card
+    public let requestedCard: Card
+    public init(requestedCard: Card) {
+        self.requestedCard = requestedCard
+    }
+}
+
+public struct CardSellAction: Action {
+    public let requestedCard: Card
     public init(requestedCard: Card) {
         self.requestedCard = requestedCard
     }

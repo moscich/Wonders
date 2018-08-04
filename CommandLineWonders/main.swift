@@ -8,14 +8,24 @@ class StandardOutput: StringOutput {
 }
 
 class ConsoleInteractor: PlayerInteractor {
+    let name: String
+    init(name: String) {
+        self.name = name
+    }
     func requestAction(game: Game, action: @escaping (Action) -> ()) {
         let presenter = OptionsPresenter(game: game, output: StandardOutput(), boardPresenter: DefaultBoardPresenter(board: game.board, output: StandardOutput()))
         var string: String
         repeat {
+            print("player = \(name)")
             string = readLine()!
-        } while !presenter.command(string, action: action)
+            if let commandLineAction = presenter.action(for: string) {
+                action(commandLineAction)
+                break
+            }
+        } while true
     }
 }
 
-let consoleInteractor = ConsoleInteractor()
-let game = Game(player1: consoleInteractor, player2: consoleInteractor)
+let consoleInteractor1 = ConsoleInteractor(name: "First")
+let consoleInteractor2 = ConsoleInteractor(name: "Second")
+let game = Game(player1: consoleInteractor1, player2: consoleInteractor2)

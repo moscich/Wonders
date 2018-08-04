@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		797902F221159ABB0061875D /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
 		79876A34210CCA3600141011 /* Wonders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A2A210CCA3600141011 /* Wonders.framework */; };
 		79876A3B210CCA3600141011 /* Wonders.h in Headers */ = {isa = PBXBuildFile; fileRef = 79876A2D210CCA3600141011 /* Wonders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79876A45210CCA6B00141011 /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
 		79876A6C2110E31700141011 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A6B2110E31700141011 /* main.swift */; };
 		79876A712110E4A000141011 /* AllLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A702110E4A000141011 /* AllLogic.swift */; };
 		79876A802110E52600141011 /* Wonders_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A772110E52600141011 /* Wonders_Mac.framework */; };
-		79876A852110E52600141011 /* Wonders_MacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A842110E52600141011 /* Wonders_MacTests.swift */; };
 		79876A872110E52600141011 /* Wonders_Mac.h in Headers */ = {isa = PBXBuildFile; fileRef = 79876A792110E52600141011 /* Wonders_Mac.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79876A8E2110E58100141011 /* AllLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A702110E4A000141011 /* AllLogic.swift */; };
 		79876A902110E85C00141011 /* Wonders_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A772110E52600141011 /* Wonders_Mac.framework */; };
@@ -67,7 +67,6 @@
 		79876A792110E52600141011 /* Wonders_Mac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wonders_Mac.h; sourceTree = "<group>"; };
 		79876A7A2110E52600141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79876A7F2110E52600141011 /* Wonders_MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wonders_MacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		79876A842110E52600141011 /* Wonders_MacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wonders_MacTests.swift; sourceTree = "<group>"; };
 		79876A862110E52600141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79876A972110F38C00141011 /* CommandLineWondersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CommandLineWondersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		79876A992110F38C00141011 /* CommandLineWondersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineWondersTests.swift; sourceTree = "<group>"; };
@@ -193,7 +192,6 @@
 		79876A832110E52600141011 /* Wonders_MacTests */ = {
 			isa = PBXGroup;
 			children = (
-				79876A842110E52600141011 /* Wonders_MacTests.swift */,
 				79876A862110E52600141011 /* Info.plist */,
 			);
 			path = Wonders_MacTests;
@@ -473,7 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79876A852110E52600141011 /* Wonders_MacTests.swift in Sources */,
+				797902F221159ABB0061875D /* ShopTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

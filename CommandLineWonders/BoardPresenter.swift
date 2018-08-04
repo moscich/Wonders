@@ -1,7 +1,7 @@
 import Foundation
 import Wonders_Mac
 
-let welcomeMessage = "Hello! Options:\ncard: Take available card"
+let welcomeMessage = "Hello! "
 let unknownActionMessage = "Error Unrecognized command"
 
 protocol StringOutput {
@@ -15,6 +15,7 @@ protocol StringCommandHandler {
 protocol BoardPresenter: StringCommandHandler {
     func presentAvailableCards()
     func getCard(index: UInt8) -> Card?
+    var availableCards: String { get }
 }
 
 class DefaultBoardPresenter: BoardPresenter {
@@ -28,6 +29,17 @@ class DefaultBoardPresenter: BoardPresenter {
             return board.availableCards[Int(index)]
         }
         return nil
+    }
+    
+    var availableCards: String {
+        var result = ""
+        for (index, card) in board.availableCards.enumerated() {
+            result += "\(index + 1). \(card.name)"
+            if index < board.availableCards.count - 1 {
+                result += "\n"
+            }
+        }
+        return result
     }
     
     func presentAvailableCards() {
