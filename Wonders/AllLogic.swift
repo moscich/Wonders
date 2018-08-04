@@ -123,7 +123,11 @@ class TestPlayerInteractor: PlayerInteractor {
 
 class RandomCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
-        return []
+        var cards = [Card]()
+        for i in 1...20 {
+            cards.append(Card(name: "\(i)"))
+        }
+        return cards
     }
 }
 
@@ -133,7 +137,7 @@ public class Game {
     let player2Interactor: PlayerInteractor
     var player1 = Player()
     let player2 = Player()
-    var currentPlayer = 0
+    var currentPlayer: Player
     let resourceCalculator = ResourceCalculator()
     let shop = Shop()
     let boardFactory: BoardFactory
@@ -143,6 +147,7 @@ public class Game {
         self.player2Interactor = player2
         self.boardFactory = boardFactory
         self.board = boardFactory.firstEpohBoard
+        currentPlayer = self.player1
         player1.requestAction(game: self, action: actionHey())
     }
     
@@ -157,29 +162,40 @@ public class Game {
     private func actionHey() -> ((Action) -> ()) {
         return { [weak self] action in
             guard let `self` = self else { return }
-            if self.currentPlayer == 0 {
-                if let cardAction = action as? CardTakeAction {
-                    let card = cardAction.requestedCard
-                    if self.board.claimCard(cardAction.requestedCard) {
-                        let requiredResources = self.resourceCalculator.requiredResources(for: card, player: self.player1)
-                        let player2Resources = self.resourceCalculator.concreteResources(in: self.player2.cards)
-                        let requiredGold = self.shop.resourceCost(requiredResources, oponentResource: player2Resources)
-                        self.player1.cards.append(card)
-                        self.player1.gold -= requiredGold
-                    }
+            
+            if let cardAction = action as? CardTakeAction {
+                let card = cardAction.requestedCard
+                if self.board.claimCard(cardAction.requestedCard) {
+                    let requiredResources = self.resourceCalculator.requiredResources(for: card, player: self.currentPlayer)
+                    let player2Resources = self.resourceCalculator.concreteResources(in: self.opponent.cards)
+                    let requiredGold = self.shop.resourceCost(requiredResources, oponentResource: player2Resources)
+                    self.currentPlayer.cards.append(card)
+                    self.currentPlayer.gold -= requiredGold
                 }
-                self.currentPlayer = 1
-                self.player2Interactor.requestAction(game: self, action: self.actionHey())
-            } else {
-                self.currentPlayer = 0
-                self.player1Interactor.requestAction(game: self, action: self.actionHey())
-                
             }
+            self.currentPlayer = self.opponent
+            self.currentInteractor.requestAction(game: self, action: self.actionHey())
         }
     }
     
     func getCard(at: Int) -> Card {
         return Card(name: "", cost: Resource(), providedResource: Resource())
+    }
+    
+    private var currentInteractor: PlayerInteractor {
+        if currentPlayer === player1 {
+            return player1Interactor
+        } else {
+            return player2Interactor
+        }
+    }
+    
+    private var opponent: Player {
+        if currentPlayer === player1 {
+            return player2
+        } else {
+            return player1
+        }
     }
 }
 

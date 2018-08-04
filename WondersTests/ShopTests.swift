@@ -99,6 +99,27 @@ class GameTests: XCTestCase {
         XCTAssertEqual(game.player1.gold, 2)
         XCTAssertTrue(game.board.availableCards.isEmpty)
     }
+    
+    func testCardOnePlayerAfterAnother() {
+        let player1Interactor = TestPlayerInteractor()
+        let player2Interactor = TestPlayerInteractor()
+        let testCard = Card(name: "1", cost: Resource(wood: 2), providedResource: Resource())
+        let testCard2 = Card(name: "2", cost: Resource(stones: 1), providedResource: Resource())
+        let cards = [CardOnBoard(card: testCard, hidden: false, descendants: []),
+                     CardOnBoard(card: testCard2, hidden: false, descendants: [])]
+        let testBoard = Board(cards: cards)
+        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
+        
+        player1Interactor.receivedSomePlayerInteraction(interaction: CardTakeAction(requestedCard: testCard))
+        XCTAssertEqual(game.player1.cards.count, 1)
+        XCTAssertEqual(game.player1.gold, 2)
+        XCTAssertEqual(game.board.availableCards.count, 1)
+        
+        player2Interactor.receivedSomePlayerInteraction(interaction: CardTakeAction(requestedCard: testCard2))
+        XCTAssertEqual(game.player2.cards.count, 1)
+        XCTAssertEqual(game.player2.gold, 4)
+        XCTAssertTrue(game.board.availableCards.isEmpty)
+    }
 }
 
 class TestBoardFactory: BoardFactory {

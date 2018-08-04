@@ -3,7 +3,7 @@ import Wonders_Mac
 
 class StandardOutput: StringOutput {
     func print(_ string: String) {
-        print(string)
+        Swift.print(string)
     }
 }
 
@@ -13,11 +13,9 @@ class ConsoleInteractor: PlayerInteractor {
         var string: String
         repeat {
             string = readLine()!
-        } while presenter.command(string, action: action)
+        } while !presenter.command(string, action: action)
     }
 }
 
-let dispatchGroup = DispatchGroup()
-dispatchGroup.enter()
 let consoleInteractor = ConsoleInteractor()
 let game = Game(player1: consoleInteractor, player2: consoleInteractor)
