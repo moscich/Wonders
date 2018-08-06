@@ -1,10 +1,16 @@
 {
     "epohs":[
              { "cards": [
-              {
-              "name":"Test"
-              }
-              ]
+                         {
+                         "name":"Test",
+                         "cost":{
+                         "gold":1
+                         },
+                         "provide":{
+                         "wood":1
+                         }
+                         }
+                         ]
              }
              ]
 }

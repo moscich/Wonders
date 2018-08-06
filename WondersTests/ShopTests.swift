@@ -289,44 +289,13 @@ class BoardTests: XCTestCase {
     }
 }
 
-struct CardStore: Decodable {
-    let epohs: [Epoh]
-}
-
-struct Epoh: Decodable {
-    let cards: [Card]
-}
-
-class RandomCardProvider: CardProvider {
-    let store: CardStore
-    let count: Int
-    let randomSequence: (Int) -> [Int]
-    convenience init(count: Int, file: String) {
-        self.init(count: count, file: file) { count -> [Int] in
-            Array(0...count-1).shuffled()
-        }
-    }
-    
-    init(count: Int, file: String, randomSequence: @escaping (Int) -> [Int]) {
-        self.count = count
-        self.randomSequence = randomSequence
-        let url = Bundle(for: type(of: self)).url(forResource: file, withExtension: nil)
-        let data = try? Data(contentsOf: url!)
-        store = try! JSONDecoder().decode(CardStore.self, from: data!)
-    }
-    
-    var firstEpohRandomisedCards: [Card] {
-        return randomSequence(count).map { index -> Card in
-            (store.epohs.first?.cards[index])!
-        }
-    }
-}
-
 class RandomCardProviderTests: XCTestCase {
     func testOneCardProvider() {
         let cardProvider = RandomCardProvider(count: 1, file: "one_card.json")
         if let card = cardProvider.firstEpohRandomisedCards.first {
             XCTAssertEqual(card.name, "Test")
+            XCTAssertEqual(card.cost, Resource(gold: 1))
+            XCTAssertEqual(card.providedResource, Resource(wood: 1))
         } else {
             XCTFail()
         }
@@ -348,6 +317,11 @@ class RandomCardProviderTests: XCTestCase {
         
         XCTAssertEqual(cardProvider.firstEpohRandomisedCards[0].name, "Test2")
         XCTAssertEqual(cardProvider.firstEpohRandomisedCards[1].name, "Test")
+    }
+    
+    func testProductionJson() {
+        let cardProvider = RandomCardProvider(count: 23)
+        XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 23)
     }
 }
 

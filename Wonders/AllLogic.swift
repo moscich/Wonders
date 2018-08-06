@@ -11,6 +11,10 @@ class Shop {
 }
 
 public class Card: Equatable, Decodable {
+    enum Feature {
+        case provideResource(resource: Resource)
+    }
+    
     public static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs === rhs
     }
@@ -22,20 +26,25 @@ public class Card: Equatable, Decodable {
         self.cost = cost
         self.providedResource = providedResource
         self.name = name
+        
+        let ficzer = Feature.provideResource(resource: Resource())
+        if case let Feature.provideResource(resource: res) = ficzer {
+            res.clay
+        }
     }
     
     enum CodingKeys: String, CodingKey {
         case cost
         case name
+        case provide
     }
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         cost = (try? values.decode(Resource.self, forKey: .cost)) ?? Resource()
+        providedResource = (try? values.decode(Resource.self, forKey: .provide)) ?? Resource()
         name = try values.decode(String.self, forKey: .name)
-        
     }
-    
 }
 
 public struct Resource: Equatable, Decodable {
@@ -68,6 +77,25 @@ public struct Resource: Equatable, Decodable {
                         glass: glass > 0 ? glass : 0,
                         papyrus: papyrus > 0 ? papyrus : 0,
                         gold: gold > 0 ? gold : 0)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case wood
+        case stones
+        case clay
+        case glass
+        case papyrus
+        case gold
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        wood = (try? values.decode(Int.self, forKey: .wood)) ?? 0
+        stones = (try? values.decode(Int.self, forKey: .stones)) ?? 0
+        clay = (try? values.decode(Int.self, forKey: .clay)) ?? 0
+        glass = (try? values.decode(Int.self, forKey: .glass)) ?? 0
+        papyrus = (try? values.decode(Int.self, forKey: .papyrus)) ?? 0
+        gold = (try? values.decode(Int.self, forKey: .gold)) ?? 0
     }
 }
 

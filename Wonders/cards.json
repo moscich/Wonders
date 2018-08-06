@@ -1,27 +1,151 @@
 {
     "epohs":[
-             [
-              {
-              "name":"wycinka",
-              "provide":{
-              "wood":1
-              }
-              },
-              {
-              "name":"skład drewna",
-              "provide":{
-              "wood":1
-              },
-              "cost":{
-              "gold":1
-              }
-              }
-              ],
-             [
-             
-             ],
-             [
-             
-             ]
+             { "cards": [
+                         {
+                         "name":"wycinka",
+                         "provide":{
+                         "wood":1
+                         }
+                         },
+                         {
+                         "name":"skład drewna",
+                         "provide":{
+                         "wood":1
+                         },
+                         "cost":{
+                         "gold":1
+                         }
+                         },
+                         {
+                         "name":"glinianka",
+                         "provide":{
+                         "clay":1
+                         }
+                         },
+                         {
+                         "name":"złoża gliny",
+                         "provide":{
+                         "clay":1
+                         },
+                         "cost":{
+                         "gold":1
+                         }
+                         },
+                         {
+                         "name":"kamieniołom",
+                         "provide":{
+                         "stones":1
+                         }
+                         },
+                         {
+                         "name":"skladowisko kamienia",
+                         "provide":{
+                         "stones":1
+                         },
+                         "cost":{
+                         "gold":1
+                         }
+                         },
+                         {
+                         "name":"huta szkła",
+                         "provide":{
+                         "glass":1
+                         },
+                         "cost":{
+                         "gold":1
+                         }
+                         },
+                         {
+                         "name":"wytwórnia papirusu",
+                         "provide":{
+                         "papyrus":1
+                         },
+                         "cost":{
+                         "gold":1
+                         }
+                         },
+                         {
+                         "name":"wieża strażnicza"
+                         },
+                         {
+                         "name":"warsztat",
+                         "cost":{
+                         "papyrus":1
+                         }
+                         },
+                         {
+                         "name":"apteka",
+                         "cost":{
+                         "glass":1
+                         }
+                         },
+                         {
+                         "name":"magazyn kamienia",
+                         "cost":{
+                         "gold":3
+                         }
+                         },
+                         {
+                         "name":"magazyn gliny",
+                         "cost":{
+                         "gold":3
+                         }
+                         },
+                         {
+                         "name":"magazyn drewna",
+                         "cost":{
+                         "gold":3
+                         }
+                         },
+                         {
+                         "name":"stajnie",
+                         "cost":{
+                         "wood":1
+                         }
+                         },
+                         {
+                         "name":"garnizon",
+                         "cost":{
+                         "clay":1
+                         }
+                         },
+                         {
+                         "name":"palisada",
+                         "cost":{
+                         "gold":2
+                         }
+                         },
+                         {
+                         "name":"skryptorium",
+                         "cost":{
+                         "gold":2
+                         }
+                         },
+                         {
+                         "name":"zielarnia",
+                         "cost":{
+                         "gold":2
+                         }
+                         },
+                         {
+                         "name":"teatr"
+                         },
+                         {
+                         "name":"ołtarz"
+                         },
+                         {
+                         "name":"łaźnie",
+                         "cost":{
+                         "stones":1
+                         }
+                         },
+                         {
+                         "name":"tawerna",
+                         "cost":{
+                         "stones":1
+                         }
+                         }
+                         ]
+             }
              ]
 }
