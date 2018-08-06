@@ -11,7 +11,16 @@ class Shop {
 }
 
 public class Card: Equatable, Decodable {
-    enum Feature {
+    public enum Feature: Decodable {
+        enum CodingKeys: String, CodingKey {
+            case wood
+        }
+        public init(from decoder: Decoder) throws {
+            let values = try decoder.container(keyedBy: CodingKeys.self)
+            let wood = (try? values.decode(Int.self, forKey: .wood)) ?? 0
+            self = Feature.provideResource(resource: Resource(wood: wood, stones: 0, clay: 0, glass: 0, papyrus: 0, gold: 0))
+        }
+        
         case provideResource(resource: Resource)
     }
     
@@ -19,31 +28,35 @@ public class Card: Equatable, Decodable {
         return lhs === rhs
     }
     
+    public let features: [Feature]
     public let cost: Resource
-    public var providedResource = Resource()
-    public var name: String
-    public init(name: String, cost: Resource = Resource(), providedResource: Resource = Resource()) {
-        self.cost = cost
-        self.providedResource = providedResource
-        self.name = name
-        
-        let ficzer = Feature.provideResource(resource: Resource())
-        if case let Feature.provideResource(resource: res) = ficzer {
-            res.clay
+    public var providedResource: Resource {
+        if let feature = features.first {
+            if case let Feature.provideResource(resource: res) = feature {
+                return res
+            }
         }
+        return Resource()
+    }
+    public var name: String
+    public init(name: String, cost: Resource = Resource()) {
+        self.cost = cost
+        self.name = name
+        self.features = []
     }
     
     enum CodingKeys: String, CodingKey {
         case cost
         case name
         case provide
+        case features
     }
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         cost = (try? values.decode(Resource.self, forKey: .cost)) ?? Resource()
-        providedResource = (try? values.decode(Resource.self, forKey: .provide)) ?? Resource()
         name = try values.decode(String.self, forKey: .name)
+        self.features = []
     }
 }
 
@@ -192,7 +205,7 @@ class SortedSimpleCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 1...20 {
-            cards.append(Card(name: "\(i)", cost: Resource(wood: 1), providedResource: Resource()))
+            cards.append(Card(name: "\(i)", cost: Resource(wood: 1)))
         }
         return cards
     }
@@ -256,7 +269,7 @@ public class Game {
     }
     
     func getCard(at: Int) -> Card {
-        return Card(name: "", cost: Resource(), providedResource: Resource())
+        return Card(name: "", cost: Resource())
     }
     
     private var currentInteractor: PlayerInteractor {

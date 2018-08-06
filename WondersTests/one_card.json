@@ -6,9 +6,11 @@
                          "cost":{
                          "gold":1
                          },
-                         "provide":{
-                         "wood":1
-                         }
+                         "features": [
+                                      {
+                                      "wood":1
+                                      },
+                                      ]
                          }
                          ]
              }
