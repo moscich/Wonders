@@ -11,31 +11,42 @@ class Shop {
 }
 
 public protocol Card: class {
-    var providedResource: Resource { get }
+    var features: [CardFeature] { get }
+//    var providedResource: Resource { get }
     var cost: Resource { get }
     var name: String { get }
 }
 
-public class DefaultCard: Card, Decodable {
-    public enum Feature: Decodable {
-        enum CodingKeys: String, CodingKey {
-            case wood
-        }
-        public init(from decoder: Decoder) throws {
-            let values = try decoder.container(keyedBy: CodingKeys.self)
-            let wood = (try? values.decode(Int.self, forKey: .wood)) ?? 0
-            self = Feature.provideResource(resource: Resource(wood: wood, stones: 0, clay: 0, glass: 0, papyrus: 0, gold: 0))
-        }
+public enum CardFeature: Decodable {
+    enum CodingKeys: String, CodingKey {
+        case wood
+        case stones
+        case clay
+        case glass
+        case papyrus
+    }
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let wood = (try? values.decode(Int.self, forKey: .wood)) ?? 0
+        let stones = (try? values.decode(Int.self, forKey: .stones)) ?? 0
+        let clay = (try? values.decode(Int.self, forKey: .clay)) ?? 0
+        let glass = (try? values.decode(Int.self, forKey: .glass)) ?? 0
+        let papyrus = (try? values.decode(Int.self, forKey: .papyrus)) ?? 0
         
-        case provideResource(resource: Resource)
+        self = CardFeature.provideResource(resource: Resource(wood: wood, stones: stones, clay: clay, glass: glass, papyrus: papyrus))
     }
     
+    case provideResource(resource: Resource)
+}
+
+public class DefaultCard: Card, Decodable {
+    
     public var name: String
-    public let features: [Feature]
+    public let features: [CardFeature]
     public let cost: Resource
     public var providedResource: Resource {
         if let feature = features.first {
-            if case let Feature.provideResource(resource: res) = feature {
+            if case let CardFeature.provideResource(resource: res) = feature {
                 return res
             }
         }
@@ -53,7 +64,7 @@ public class DefaultCard: Card, Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         cost = (try? values.decode(Resource.self, forKey: .cost)) ?? Resource()
         name = try values.decode(String.self, forKey: .name)
-        features = (try? values.decode([Feature].self, forKey: .features)) ?? []
+        features = (try? values.decode([CardFeature].self, forKey: .features)) ?? []
     }
 }
 
@@ -130,24 +141,6 @@ func -(left: Resource, rigth: Resource) -> Resource {
 class Player {
     var cards: [Card] = []
     var gold: Int = 6
-}
-
-class ResourceCalculator {
-    func concreteResources(in cards: [Card]) -> Resource {
-        return cards.reduce(Resource(), { (result: Resource, card) -> Resource in
-            result + card.providedResource
-        })
-    }
-    
-    func requiredResources(for card: Card, player: Player) -> Resource {
-        let resources = concreteResources(in: player.cards)
-        return (card.cost - resources).withoutNegative
-    }
-    
-    // draft
-    //    func possibleResources(in cards: [Card]) -> Resource {
-    //
-    //    }
 }
 
 public protocol Action {

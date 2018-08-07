@@ -26,6 +26,8 @@
 		79876AA12110F42600141011 /* BoardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A9F2110F3C100141011 /* BoardPresenter.swift */; };
 		79876AA42114EDBC00141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
 		79876AA52114EDC400141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
+		79AA8F6E211A23D200000095 /* ResourceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA8F6D211A23D200000095 /* ResourceCalculator.swift */; };
+		79AA8F6F211A23D200000095 /* ResourceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA8F6D211A23D200000095 /* ResourceCalculator.swift */; };
 		79FD1381211620B6001DFE53 /* two_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 79FD1380211620B6001DFE53 /* two_cards.json */; };
 		79FD1383211634CF001DFE53 /* RandomCardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD1382211634CF001DFE53 /* RandomCardProvider.swift */; };
 		79FD1384211634CF001DFE53 /* RandomCardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD1382211634CF001DFE53 /* RandomCardProvider.swift */; };
@@ -83,6 +85,7 @@
 		79876A9B2110F38C00141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79876A9F2110F3C100141011 /* BoardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPresenter.swift; sourceTree = "<group>"; };
 		79876AA32114EDBC00141011 /* OptionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPresenter.swift; sourceTree = "<group>"; };
+		79AA8F6D211A23D200000095 /* ResourceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCalculator.swift; sourceTree = "<group>"; };
 		79FD1380211620B6001DFE53 /* two_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = two_cards.json; path = "../../../../Creative Cloud Files/two_cards.json"; sourceTree = "<group>"; };
 		79FD1382211634CF001DFE53 /* RandomCardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCardProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +174,7 @@
 				79876A702110E4A000141011 /* AllLogic.swift */,
 				797902F32115FB9F0061875D /* cards.json */,
 				79FD1382211634CF001DFE53 /* RandomCardProvider.swift */,
+				79AA8F6D211A23D200000095 /* ResourceCalculator.swift */,
 			);
 			path = Wonders;
 			sourceTree = "<group>";
@@ -459,6 +463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79AA8F6E211A23D200000095 /* ResourceCalculator.swift in Sources */,
 				79876A712110E4A000141011 /* AllLogic.swift in Sources */,
 				79FD1383211634CF001DFE53 /* RandomCardProvider.swift in Sources */,
 			);
@@ -486,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79AA8F6F211A23D200000095 /* ResourceCalculator.swift in Sources */,
 				79876A8E2110E58100141011 /* AllLogic.swift in Sources */,
 				79FD1384211634CF001DFE53 /* RandomCardProvider.swift in Sources */,
 			);

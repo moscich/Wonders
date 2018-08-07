@@ -29,10 +29,12 @@ class ShopTests: XCTestCase {
 }
 
 class TestCard: Card {
+    var features: [CardFeature] = []
     var providedResource: Resource
     var cost: Resource
     var name: String
     init(name: String = "", cost: Resource = Resource(), providedResource: Resource = Resource()) {
+        features.append(CardFeature.provideResource(resource: providedResource))
         self.providedResource = providedResource
         self.cost = cost
         self.name = name
@@ -82,12 +84,12 @@ class GameTests: XCTestCase {
         XCTAssertFalse(player2Interactor.wasAskedForAction)
         player1Interactor.receivedSomePlayerInteraction(interaction: TestAction())
         XCTAssertTrue(player2Interactor.wasAskedForAction)
-
+        
         player1Interactor.wasAskedForAction = false
         player2Interactor.wasAskedForAction = false
-
+        
         player2Interactor.receivedSomePlayerInteraction(interaction: TestAction())
-
+        
         XCTAssertTrue(player1Interactor.wasAskedForAction)
         print(game)
     }
@@ -99,13 +101,13 @@ class GameTests: XCTestCase {
         let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
         
         let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-
+        
         player1Interactor.receivedSomePlayerInteraction(interaction: CardTakeAction(requestedCard: testCard))
         XCTAssertEqual(game.player1.cards.count, 1)
         XCTAssertEqual(game.player1.gold, 4)
         XCTAssertTrue(game.board.availableCards.isEmpty)
     }
-//
+    //
     func testCardTakeAction_v2() {
         let player1Interactor = TestPlayerInteractor()
         let player2Interactor = TestPlayerInteractor()
@@ -241,6 +243,13 @@ extension Array where Element:CardOnBoard {
     }
 }
 
+extension CardOnBoard {
+    convenience init(name: String, descendants: [CardOnBoard] = []) {
+        let card = TestCard(name: name)
+        self.init(card: card, hidden: false, descendants: descendants)
+    }
+}
+
 class BoardTests: XCTestCase {
     func testNoCards() {
         let board = Board(cards: [])
@@ -249,35 +258,26 @@ class BoardTests: XCTestCase {
     }
     
     func testOneCard() {
-        let card = TestCard(name: "Test Card")
-        let cardOnBoard = CardOnBoard(card: card, hidden: false, descendants: [])
-        let board = Board(cards: [cardOnBoard])
-        let availableCards = board.availableCards
-        XCTAssertEqual(availableCards.count, 1)
-        XCTAssertEqual(availableCards.first?.name, "Test Card")
+        let board = Board(cards: [CardOnBoard(name: "Test Card")])
+        XCTAssertEqual(board.availableCards.count, 1)
+        XCTAssertEqual(board.availableCards.first?.name, "Test Card")
     }
-//
+    
     func testTwoCards() {
-        
-        let card1 = TestCard(name: "First Test Card")
-        let card2 = TestCard(name: "Second Test Card")
-        let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [])
-        let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
-        let board = Board(cards: [cardOnBoard1, cardOnBoard2])
+        let card1 = CardOnBoard(name: "First Test Card")
+        let card2 = CardOnBoard(name: "Second Test Card")
+        let board = Board(cards: [card1, card2])
         
         let availableCards = board.availableCards
         XCTAssertEqual(availableCards.count, 2)
         XCTAssertEqual(availableCards[0].name, "First Test Card")
         XCTAssertEqual(availableCards[1].name, "Second Test Card")
     }
-//
+    
     func testTwoCardsWithDependency() {
-        let card1 = TestCard(name: "First Test Card")
-        let card2 = TestCard(name: "Second Test Card")
-
-        let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
-        let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [cardOnBoard2])
-        let board = Board(cards: [cardOnBoard1, cardOnBoard2])
+        let card2 = CardOnBoard(name: "Second Test Card")
+        let card1 = CardOnBoard(name: "First Test Card", descendants: [card2])
+        let board = Board(cards: [card1, card2])
         let availableCards = board.availableCards
         XCTAssertEqual(availableCards.count, 1)
         XCTAssertEqual(availableCards.first?.name, "Second Test Card")
@@ -311,49 +311,54 @@ class BoardTests: XCTestCase {
 
 class RandomCardProviderTests: XCTestCase {
     func testOneCardProvider() {
-        let url = Bundle(for: type(of: self)).url(forResource: "one_card.json", withExtension: nil)
-        let cardProvider = RandomCardProvider(count: 1, file: url!)
-        if let card = cardProvider.firstEpohRandomisedCards.first {
-            XCTAssertEqual(card.name, "Test")
-            XCTAssertEqual(card.cost, Resource(gold: 1))
-            XCTAssertEqual(card.providedResource, Resource(wood: 1))
+        if let url = Bundle(for: type(of: self)).url(forResource: "one_card.json", withExtension: nil) {
+            let cardProvider = RandomCardProvider(count: 1, file: url)
+            if let card = cardProvider.firstEpohRandomisedCards.first {
+                XCTAssertEqual(card.name, "Test")
+                XCTAssertEqual(card.cost, Resource(gold: 1))
+                XCTAssertEqual(card.providedResource, Resource(wood: 1, stones: 2, clay: 3, glass: 4, papyrus: 5, gold: 0))
+            } else {
+                XCTFail()
+            }
+        } else {
+            XCTFail()
+        }
+    }
+    
+    func testOneCardLimited() {
+        if let url = Bundle(for: type(of: self)).url(forResource: "two_cards", withExtension: "json") {
+            let cardProvider = RandomCardProvider(count: 1, file: url)
+            XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 1)
+            if let card = cardProvider.firstEpohRandomisedCards.first {
+                XCTAssertEqual(card.name, "Test")
+            } else {
+                XCTFail()
+            }
+            
+        } else {
+            XCTFail()
+        }
+        
+    }
+    
+    func testTwoCardsShuffled() {
+        if let url = Bundle(for: type(of: self)).url(forResource: "two_cards", withExtension: "json") {
+            let cardProvider = RandomCardProvider(count: 2, file: url) { _ in [1, 0] }
+            XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 2)
+            
+            XCTAssertEqual(cardProvider.firstEpohRandomisedCards[0].name, "Test2")
+            XCTAssertEqual(cardProvider.firstEpohRandomisedCards[1].name, "Test")
+        }
+    }
+    
+    func testProductionJson() {
+        if let url = Bundle(for: RandomCardProvider.self).url(forResource: "cards", withExtension: "json") {
+            let cardProvider = RandomCardProvider(count: 23, file: url)
+            XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 23)
         } else {
             XCTFail()
         }
     }
 }
-//
-//    func testOneCardLimited() {
-//        let cardProvider = RandomCardProvider(count: 1, file: "two_cards.json")
-//        XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 1)
-//        if let card = cardProvider.firstEpohRandomisedCards.first {
-//            XCTAssertEqual(card.name, "Test")
-//        } else {
-//            XCTFail()
-//        }
-//    }
-//
-//    func testTwoCardsShuffled() {
-//        let cardProvider = RandomCardProvider(count: 2, file: "two_cards.json") { _ in [1, 0] }
-//        XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 2)
-//
-//        XCTAssertEqual(cardProvider.firstEpohRandomisedCards[0].name, "Test2")
-//        XCTAssertEqual(cardProvider.firstEpohRandomisedCards[1].name, "Test")
-//    }
-//
-//    func testProductionJson() {
-//        let cardProvider = RandomCardProvider(count: 23)
-//        XCTAssertEqual(cardProvider.firstEpohRandomisedCards.count, 23)
-//    }
-//}
-//
-//class TestDeck: XCTestCase {
-//    func testOneCardDeck() {
-////        let deck = Deck()//from: Bundle(for: type(of: self)).path(forResource: "test.json", ofType: nil)!)
-//        let url = Bundle(for: type(of: self)).url(forResource: "one_card.json", withExtension: nil)
-//        let data = try? Data(contentsOf: url!)
-//        let store = try! JSONDecoder().decode(CardStore.self, from: data!)
-////        XCTAssertEqual(deck.firstEpoh.count, 1)
-////        Bundle(for: type(of: self)).path(forResource: <#T##String?#>, ofType: <#T##String?#>)
-//    }
-//}
+
+
