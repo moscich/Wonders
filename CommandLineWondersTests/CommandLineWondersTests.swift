@@ -27,11 +27,37 @@ class TestInteractor: PlayerInteractor {
     }
 }
 
+class TestCard: Card {
+    var features: [CardFeature] = []
+    var providedResource: Resource
+    var cost: Resource
+    var name: String
+    init(name: String = "", cost: Resource = Resource(), providedResource: Resource = Resource()) {
+        features.append(CardFeature.provideResource(resource: providedResource))
+        self.providedResource = providedResource
+        self.cost = cost
+        self.name = name
+    }
+    
+    convenience init(feature: CardFeature) {
+        self.init(name: "", cost: Resource(), providedResource: Resource())
+        features.append(feature)
+    }
+    
+    convenience init(providedResource: Resource) {
+        self.init(name: "", cost: Resource(), providedResource: providedResource)
+    }
+    
+    convenience init() {
+        self.init(name: "", cost: Resource(), providedResource: Resource())
+    }
+}
+
 class TestCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 0...20 {
-            cards.append(Card(name: "\(i+1)"))
+            cards.append(TestCard(name: "\(i+1)"))
         }
         return cards
     }
@@ -75,7 +101,7 @@ class OptionsPresenterTests: XCTestCase {
         let action = presenter.action(for: "take 1")
         let card = game.board.availableCards.first!
         if let cardTakeAction = action as? CardTakeAction {
-            XCTAssertEqual(cardTakeAction.requestedCard, card)
+            XCTAssertTrue(cardTakeAction.requestedCard === card)
         } else {
             XCTFail()
         }
@@ -97,7 +123,7 @@ class OptionsPresenterTests: XCTestCase {
         let action = presenter.action(for: "sell 2")
         let card = game.board.availableCards[1]
         if let cardSellAction = action as? CardSellAction {
-            XCTAssertEqual(cardSellAction.requestedCard, card)
+            XCTAssertTrue(cardSellAction.requestedCard === card)
         } else {
             XCTFail()
         }
@@ -129,9 +155,9 @@ class TestBoard: Board {
 class BoardPresenterTests: XCTestCase {
     func testCoupleCard() {
         let output = MockOutput()
-        let card1 = Card(name: "Test Card")
-        let card2 = Card(name: "Test Card 2")
-        let card3 = Card(name: "Test Card 3")
+        let card1 = TestCard(name: "Test Card")
+        let card2 = TestCard(name: "Test Card 2")
+        let card3 = TestCard(name: "Test Card 3")
         let testBoard = TestBoard(availableCards: [card1, card2, card3])
         let presenter: BoardPresenter = DefaultBoardPresenter(board: testBoard, output: output)
         presenter.presentAvailableCards()
@@ -140,16 +166,16 @@ class BoardPresenterTests: XCTestCase {
     
     func testGetCard() {
         let output = MockOutput()
-        let card1 = Card(name: "Test Card")
+        let card1 = TestCard(name: "Test Card")
         let testBoard = TestBoard(availableCards: [card1])
         let presenter: BoardPresenter = DefaultBoardPresenter(board: testBoard, output: output)
         let wantedCard = presenter.getCard(index: 0)
-        XCTAssertEqual(wantedCard, card1)
+        XCTAssertTrue(wantedCard === card1)
     }
     
     func testGetInvalidCard() {
         let output = MockOutput()
-        let card1 = Card(name: "Test Card")
+        let card1 = TestCard(name: "Test Card")
         let testBoard = TestBoard(availableCards: [card1])
         let presenter: BoardPresenter = DefaultBoardPresenter(board: testBoard, output: output)
         let wantedCard = presenter.getCard(index: 4)
@@ -158,7 +184,7 @@ class BoardPresenterTests: XCTestCase {
     
     func testAction() {
         let output = MockOutput()
-        let card1 = Card(name: "Test Card")
+        let card1 = TestCard(name: "Test Card")
         let testBoard = TestBoard(availableCards: [card1])
         let presenter: BoardPresenter = DefaultBoardPresenter(board: testBoard, output: output)
         let exp = expectation(description: "")

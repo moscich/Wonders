@@ -195,16 +195,6 @@ class TestPlayerInteractor: PlayerInteractor {
     }
 }
 
-class SortedSimpleCardProvider: CardProvider {
-    var firstEpohRandomisedCards: [Card] {
-        var cards = [Card]()
-        for i in 1...20 {
-//            cards.append(DefaultCard(name: "\(i)", cost: Resource(wood: 1)))
-        }
-        return cards
-    }
-}
-
 public class Game {
     public let board: Board
     let player1Interactor: PlayerInteractor
