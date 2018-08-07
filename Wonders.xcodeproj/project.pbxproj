@@ -86,6 +86,7 @@
 		79876A9F2110F3C100141011 /* BoardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardPresenter.swift; sourceTree = "<group>"; };
 		79876AA32114EDBC00141011 /* OptionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPresenter.swift; sourceTree = "<group>"; };
 		79AA8F6D211A23D200000095 /* ResourceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCalculator.swift; sourceTree = "<group>"; };
+		79AA8F70211A39A000000095 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		79FD1380211620B6001DFE53 /* two_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = two_cards.json; path = "../../../../Creative Cloud Files/two_cards.json"; sourceTree = "<group>"; };
 		79FD1382211634CF001DFE53 /* RandomCardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCardProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +143,7 @@
 		79876A20210CCA3600141011 = {
 			isa = PBXGroup;
 			children = (
+				79AA8F70211A39A000000095 /* .travis.yml */,
 				79876A2C210CCA3600141011 /* Wonders */,
 				79876A37210CCA3600141011 /* WondersTests */,
 				79876A6A2110E31700141011 /* CommandLineWonders */,
@@ -583,7 +585,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -640,7 +642,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

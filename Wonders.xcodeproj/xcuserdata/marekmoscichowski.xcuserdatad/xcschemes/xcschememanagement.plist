@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>CommandLineWonders.xcscheme</key>
+		<key>CommandLineWonders.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
@@ -14,12 +14,12 @@
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>Wonders.xcscheme</key>
+		<key>Wonders.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>WondersTests.xcscheme_^#shared#^_</key>
+		<key>WondersTests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
@@ -35,32 +35,32 @@
 		<key>79876A29210CCA3600141011</key>
 		<dict>
 			<key>primary</key>
-			<true />
+			<true/>
 		</dict>
 		<key>79876A32210CCA3600141011</key>
 		<dict>
 			<key>primary</key>
-			<true />
+			<true/>
 		</dict>
 		<key>79876A682110E31700141011</key>
 		<dict>
 			<key>primary</key>
-			<true />
+			<true/>
 		</dict>
 		<key>79876A762110E52600141011</key>
 		<dict>
 			<key>primary</key>
-			<true />
+			<true/>
 		</dict>
 		<key>79876A7E2110E52600141011</key>
 		<dict>
 			<key>primary</key>
-			<true />
+			<true/>
 		</dict>
 		<key>79876A962110F38C00141011</key>
 		<dict>
 			<key>primary</key>
-			<true />
+			<true/>
 		</dict>
 	</dict>
 </dict>
