@@ -9,17 +9,14 @@ class Shop {
             resource.stones * (2 + oponentResource.stones)
     }
 }
+
 public protocol Card: class {
     var providedResource: Resource { get }
     var cost: Resource { get }
     var name: String { get }
 }
 
-public class DefaultCard: Card, Equatable, Decodable {
-    public static func == (lhs: DefaultCard, rhs: DefaultCard) -> Bool {
-        return lhs === rhs
-    }
-    
+public class DefaultCard: Card, Decodable {
     public enum Feature: Decodable {
         enum CodingKeys: String, CodingKey {
             case wood
@@ -33,6 +30,7 @@ public class DefaultCard: Card, Equatable, Decodable {
         case provideResource(resource: Resource)
     }
     
+    public var name: String
     public let features: [Feature]
     public let cost: Resource
     public var providedResource: Resource {
@@ -42,12 +40,6 @@ public class DefaultCard: Card, Equatable, Decodable {
             }
         }
         return Resource()
-    }
-    public var name: String
-    public init(name: String, cost: Resource = Resource()) {
-        self.cost = cost
-        self.name = name
-        self.features = []
     }
     
     enum CodingKeys: String, CodingKey {
@@ -180,37 +172,11 @@ class TestPlayerInteractor: PlayerInteractor {
     }
 }
 
-//class ProdCardProvider: CardProvider {
-//    init(deck: ) {
-//        <#statements#>
-//    }
-//    var firstEpohRandomisedCards: [Card] {
-//        return []
-//    }
-//}
-
-//public class Deck {
-//    let store: CardStore
-//    public init() {
-//        let path = Bundle(for: type(of: self)).path(forResource: "cards.json", ofType: nil)!
-//        let url = Bundle(for: type(of: self)).url(forResource: "cards.json", withExtension: nil)
-//        let data = try? Data(contentsOf: url!)
-//        store = try! JSONDecoder().decode(CardStore.self, from: data!)
-//    }
-////    init(from path: String) {
-////        let data = try? Data(contentsOf: URL(string: path)!)
-////        store = try! JSONDecoder().decode(CardStore.self, from: data!)
-////    }
-//    var firstEpoh: [Card] {
-//        return []
-//    }
-//}
-
 class SortedSimpleCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 1...20 {
-            cards.append(DefaultCard(name: "\(i)", cost: Resource(wood: 1)))
+//            cards.append(DefaultCard(name: "\(i)", cost: Resource(wood: 1)))
         }
         return cards
     }
@@ -241,7 +207,8 @@ public class Game {
     }
     
     convenience public init(player1: PlayerInteractor, player2: PlayerInteractor) {
-        self.init(player1: player1, player2: player2, boardFactory: DefaultBoardFactory(cardProvider: SortedSimpleCardProvider()))
+        let url = Bundle(for: type(of: self)).url(forResource: "cards", withExtension: "json")!
+        self.init(player1: player1, player2: player2, boardFactory: DefaultBoardFactory(cardProvider: RandomCardProvider(file: url)))
     }
     
     private func actionHey() -> ((Action) -> ()) {
@@ -271,10 +238,6 @@ public class Game {
             
             self.currentInteractor.requestAction(game: self, action: self.actionHey())
         }
-    }
-    
-    func getCard(at: Int) -> Card {
-        return DefaultCard(name: "", cost: Resource())
     }
     
     private var currentInteractor: PlayerInteractor {
@@ -398,7 +361,7 @@ public class CardOnBoard {
     public var card: Card
     public var descendants: [CardOnBoard]
     
-    public init(card: Card = DefaultCard(name: ""), hidden: Bool, descendants: [CardOnBoard]) {
+    public init(card: Card, hidden: Bool, descendants: [CardOnBoard]) {
         self.hidden = hidden
         self.descendants = descendants
         self.card = card

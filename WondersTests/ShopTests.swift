@@ -32,7 +32,7 @@ class TestCard: Card {
     var providedResource: Resource
     var cost: Resource
     var name: String
-    init(name: String, cost: Resource, providedResource: Resource) {
+    init(name: String = "", cost: Resource = Resource(), providedResource: Resource = Resource()) {
         self.providedResource = providedResource
         self.cost = cost
         self.name = name
@@ -59,9 +59,9 @@ class ResourceCalculatorTests: XCTestCase {
     
     func testRequiredResources() {
         let calculator = ResourceCalculator()
-        let card = DefaultCard(name: "", cost: Resource(wood: 1, stones: 3, clay: 2))//, providedResource: Resource())
+        let card = TestCard(cost: Resource(wood: 1, stones: 3, clay: 2))
         let player1 = Player()
-        player1.cards = [TestCard(providedResource: Resource(wood: 3, stones: 1))]//, providedResource: Resource(wood: 3, stones: 1))]
+        player1.cards = [TestCard(providedResource: Resource(wood: 3, stones: 1))]
         let requiredResources = calculator.requiredResources(for: card, player: player1)
         XCTAssertEqual(requiredResources, Resource(stones: 2, clay: 2))
     }
@@ -95,7 +95,7 @@ class GameTests: XCTestCase {
     func testCardTakeAction() {
         let player1Interactor = TestPlayerInteractor()
         let player2Interactor = TestPlayerInteractor()
-        let testCard = DefaultCard(name: "", cost: Resource(wood: 1))//, providedResource: Resource())
+        let testCard = TestCard(cost: Resource(wood: 1))
         let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
         
         let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
@@ -109,7 +109,7 @@ class GameTests: XCTestCase {
     func testCardTakeAction_v2() {
         let player1Interactor = TestPlayerInteractor()
         let player2Interactor = TestPlayerInteractor()
-        let testCard = DefaultCard(name: "", cost: Resource(wood: 2))//, providedResource: Resource())
+        let testCard = TestCard(cost: Resource(wood: 2))
         let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
         
         let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
@@ -123,8 +123,8 @@ class GameTests: XCTestCase {
     func testCardOnePlayerAfterAnother() {
         let player1Interactor = TestPlayerInteractor()
         let player2Interactor = TestPlayerInteractor()
-        let testCard = DefaultCard(name: "1", cost: Resource(wood: 2))//, providedResource: Resource())
-        let testCard2 = DefaultCard(name: "2", cost: Resource(stones: 1))//, providedResource: Resource())
+        let testCard = TestCard(cost: Resource(wood: 2))
+        let testCard2 = TestCard(cost: Resource(stones: 1))
         let cards = [CardOnBoard(card: testCard, hidden: false, descendants: []),
                      CardOnBoard(card: testCard2, hidden: false, descendants: [])]
         let testBoard = Board(cards: cards)
@@ -144,7 +144,7 @@ class GameTests: XCTestCase {
     func testTryTakeTooExpensiveCard() {
         let player1Interactor = TestPlayerInteractor()
         let player2Interactor = TestPlayerInteractor()
-        let testCard = DefaultCard(name: "", cost: Resource(wood: 4))//, providedResource: Resource())
+        let testCard = TestCard(cost: Resource(wood: 4))
         let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
         
         let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
@@ -160,7 +160,7 @@ class GameTests: XCTestCase {
     func testSellCardAction() {
         let player1Interactor = TestPlayerInteractor()
         let player2Interactor = TestPlayerInteractor()
-        let testCard = DefaultCard(name: "", cost: Resource(wood: 4))//, providedResource: Resource())
+        let testCard = TestCard(cost: Resource(wood: 4))
         let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
         
         let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
@@ -187,7 +187,7 @@ class TestCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 1...20 {
-            cards.append(DefaultCard(name: "\(i)"))
+            cards.append(TestCard(name: "\(i)"))
         }
         return cards
     }
@@ -249,7 +249,7 @@ class BoardTests: XCTestCase {
     }
     
     func testOneCard() {
-        let card = DefaultCard(name: "Test Card")
+        let card = TestCard(name: "Test Card")
         let cardOnBoard = CardOnBoard(card: card, hidden: false, descendants: [])
         let board = Board(cards: [cardOnBoard])
         let availableCards = board.availableCards
@@ -259,8 +259,8 @@ class BoardTests: XCTestCase {
 //
     func testTwoCards() {
         
-        let card1 = DefaultCard(name: "First Test Card")
-        let card2 = DefaultCard(name: "Second Test Card")
+        let card1 = TestCard(name: "First Test Card")
+        let card2 = TestCard(name: "Second Test Card")
         let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [])
         let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
         let board = Board(cards: [cardOnBoard1, cardOnBoard2])
@@ -272,8 +272,8 @@ class BoardTests: XCTestCase {
     }
 //
     func testTwoCardsWithDependency() {
-        let card1 = DefaultCard(name: "First Test Card")
-        let card2 = DefaultCard(name: "Second Test Card")
+        let card1 = TestCard(name: "First Test Card")
+        let card2 = TestCard(name: "Second Test Card")
 
         let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
         let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [cardOnBoard2])
@@ -284,8 +284,8 @@ class BoardTests: XCTestCase {
     }
     
     func testGetUnavailableCard() {
-        let card1 = DefaultCard(name: "First Test Card")
-        let card2 = DefaultCard(name: "Second Test Card")
+        let card1 = TestCard(name: "First Test Card")
+        let card2 = TestCard(name: "Second Test Card")
         
         let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
         let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [cardOnBoard2])
@@ -295,8 +295,8 @@ class BoardTests: XCTestCase {
     }
     
     func testGetAvailableCard() {
-        let card1 = DefaultCard(name: "First Test Card")
-        let card2 = DefaultCard(name: "Second Test Card")
+        let card1 = TestCard(name: "First Test Card")
+        let card2 = TestCard(name: "Second Test Card")
         
         let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
         let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [cardOnBoard2])
