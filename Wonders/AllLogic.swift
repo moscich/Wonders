@@ -8,11 +8,38 @@ class Shop {
             resource.glass * (2 + oponentResource.glass) +
             resource.stones * (2 + oponentResource.stones)
     }
+    
+    func resourceCost(_ resource: Resource, player: Player, oponentResource: Resource) -> Int {
+        let features = player.cards.reduce(into: []) { (res, card) in
+            res.append(contentsOf: card.features)
+        }
+        
+        var woodCost = 2 + oponentResource.wood
+        var stoneCost = 2 + oponentResource.stones
+        var clayCost = 2 + oponentResource.stones
+        
+        for feature in features {
+            switch feature {
+            case .woodWerehouse:
+                woodCost = 1
+            case .stoneWerehouse:
+                stoneCost = 1
+            case .clayWerehouse:
+                clayCost = 1
+            default:break
+            }
+        }
+
+        return resource.wood * woodCost +
+            resource.stones * stoneCost +
+            resource.clay * clayCost +
+            resource.papyrus * (2 + oponentResource.papyrus) +
+            resource.glass * (2 + oponentResource.glass)
+    }
 }
 
 public protocol Card: class {
     var features: [CardFeature] { get }
-//    var providedResource: Resource { get }
     var cost: Resource { get }
     var name: String { get }
 }
@@ -37,6 +64,9 @@ public enum CardFeature: Decodable {
     }
     
     case provideResource(resource: Resource)
+    case woodWerehouse
+    case stoneWerehouse
+    case clayWerehouse
 }
 
 public class DefaultCard: Card, Decodable {

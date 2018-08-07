@@ -2,29 +2,53 @@ import XCTest
 @testable import Wonders
 
 class ShopTests: XCTestCase {
+    var shop: Shop!
+    override func setUp() {
+        shop = Shop()
+    }
     
     func testOneWoodCost_noCards() {
-        let shop = Shop()
         let cost = shop.resourceCost(Resource(wood: 1), oponentResource: Resource())
         XCTAssertEqual(cost, 2)
     }
     
     func testOneWoodOneClayCost_noCards() {
-        let shop = Shop()
         let cost = shop.resourceCost(Resource(wood: 1, clay: 1), oponentResource: Resource())
         XCTAssertEqual(cost, 4)
     }
     
     func testOneWood_OpponentHas1Wood() {
-        let shop = Shop()
         let cost = shop.resourceCost(Resource(wood: 1), oponentResource: Resource(wood: 1))
         XCTAssertEqual(cost, 3)
     }
     
     func testOneOfEach_OpponentHas1Wood2stones3papyrus4clay5glass() {
-        let shop = Shop()
         let cost = shop.resourceCost(Resource(wood: 1, stones: 1, clay: 1, glass: 1, papyrus: 1), oponentResource: Resource(wood: 1, stones: 2, clay: 3, glass: 4, papyrus: 5))
         XCTAssertEqual(cost, 25)
+    }
+    
+    func testWoodCost1WhenHasWerehouse() {
+        let player = Player()
+        let werehouse = TestCard(feature: .woodWerehouse)
+        player.cards.append(werehouse)
+        let cost = shop.resourceCost(Resource(wood: 2), player: player, oponentResource: Resource(wood: 5))
+        XCTAssertEqual(cost, 2)
+    }
+    
+    func testStoneCost1WhenHasWerehouse() {
+        let player = Player()
+        let werehouse = TestCard(feature: .stoneWerehouse)
+        player.cards.append(werehouse)
+        let cost = shop.resourceCost(Resource(stones: 2), player: player, oponentResource: Resource(stones: 5))
+        XCTAssertEqual(cost, 2)
+    }
+    
+    func testClayCost1WhenHasWerehouse() {
+        let player = Player()
+        let werehouse = TestCard(feature: .clayWerehouse)
+        player.cards.append(werehouse)
+        let cost = shop.resourceCost(Resource(clay: 2), player: player, oponentResource: Resource(clay: 5))
+        XCTAssertEqual(cost, 2)
     }
 }
 
@@ -38,6 +62,11 @@ class TestCard: Card {
         self.providedResource = providedResource
         self.cost = cost
         self.name = name
+    }
+    
+    convenience init(feature: CardFeature) {
+        self.init(name: "", cost: Resource(), providedResource: Resource())
+        features.append(feature)
     }
     
     convenience init(providedResource: Resource) {
