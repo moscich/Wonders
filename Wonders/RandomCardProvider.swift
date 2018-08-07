@@ -5,7 +5,7 @@ struct CardStore: Decodable {
 }
 
 struct Epoh: Decodable {
-    let cards: [Card]
+    let cards: [DefaultCard]
 }
 
 class RandomCardProvider: CardProvider {

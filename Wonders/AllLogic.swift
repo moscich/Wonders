@@ -9,8 +9,17 @@ class Shop {
             resource.stones * (2 + oponentResource.stones)
     }
 }
+public protocol Card: class {
+    var providedResource: Resource { get }
+    var cost: Resource { get }
+    var name: String { get }
+}
 
-public class Card: Equatable, Decodable {
+public class DefaultCard: Card, Equatable, Decodable {
+    public static func == (lhs: DefaultCard, rhs: DefaultCard) -> Bool {
+        return lhs === rhs
+    }
+    
     public enum Feature: Decodable {
         enum CodingKeys: String, CodingKey {
             case wood
@@ -22,10 +31,6 @@ public class Card: Equatable, Decodable {
         }
         
         case provideResource(resource: Resource)
-    }
-    
-    public static func == (lhs: Card, rhs: Card) -> Bool {
-        return lhs === rhs
     }
     
     public let features: [Feature]
@@ -56,7 +61,7 @@ public class Card: Equatable, Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         cost = (try? values.decode(Resource.self, forKey: .cost)) ?? Resource()
         name = try values.decode(String.self, forKey: .name)
-        self.features = []
+        features = (try? values.decode([Feature].self, forKey: .features)) ?? []
     }
 }
 
@@ -205,7 +210,7 @@ class SortedSimpleCardProvider: CardProvider {
     var firstEpohRandomisedCards: [Card] {
         var cards = [Card]()
         for i in 1...20 {
-            cards.append(Card(name: "\(i)", cost: Resource(wood: 1)))
+            cards.append(DefaultCard(name: "\(i)", cost: Resource(wood: 1)))
         }
         return cards
     }
@@ -269,7 +274,7 @@ public class Game {
     }
     
     func getCard(at: Int) -> Card {
-        return Card(name: "", cost: Resource())
+        return DefaultCard(name: "", cost: Resource())
     }
     
     private var currentInteractor: PlayerInteractor {
@@ -393,7 +398,7 @@ public class CardOnBoard {
     public var card: Card
     public var descendants: [CardOnBoard]
     
-    public init(card: Card = Card(name: ""), hidden: Bool, descendants: [CardOnBoard]) {
+    public init(card: Card = DefaultCard(name: ""), hidden: Bool, descendants: [CardOnBoard]) {
         self.hidden = hidden
         self.descendants = descendants
         self.card = card
