@@ -1,3 +1,2 @@
-language: swift
-script:
-xcodebuild -scheme Wonders  -destination 'platform=iOS Simulator,name=iPhone 8' build test
+language: objective-c
+script: xcodebuild -scheme Wonders  -destination 'platform=iOS Simulator,name=iPhone 8' build test
