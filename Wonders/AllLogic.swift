@@ -1,22 +1,14 @@
 import Foundation
 
 class Shop {
-    func resourceCost(_ resource: Resource, oponentResource: Resource) -> Int {
-        return resource.wood * (2 + oponentResource.wood) +
-            resource.clay * (2 + oponentResource.clay) +
-            resource.papyrus * (2 + oponentResource.papyrus) +
-            resource.glass * (2 + oponentResource.glass) +
-            resource.stones * (2 + oponentResource.stones)
-    }
-    
-    func resourceCost(_ resource: Resource, player: Player, oponentResource: Resource) -> Int {
-        let features = player.cards.reduce(into: []) { (res, card) in
+    func resourceCost(_ resource: Resource, player: Player? = nil, oponentResource: Resource) -> Int {
+        let features = (player?.cards.reduce(into: []) { (res, card) in
             res.append(contentsOf: card.features)
-        }
+        }) ?? []
         
         var woodCost = 2 + oponentResource.wood
         var stoneCost = 2 + oponentResource.stones
-        var clayCost = 2 + oponentResource.stones
+        var clayCost = 2 + oponentResource.clay
         
         for feature in features {
             switch feature {
@@ -34,7 +26,8 @@ class Shop {
             resource.stones * stoneCost +
             resource.clay * clayCost +
             resource.papyrus * (2 + oponentResource.papyrus) +
-            resource.glass * (2 + oponentResource.glass)
+            resource.glass * (2 + oponentResource.glass) +
+            resource.gold
     }
 }
 
@@ -168,9 +161,9 @@ func -(left: Resource, rigth: Resource) -> Resource {
                     gold: left.gold - rigth.gold)
 }
 
-class Player {
-    var cards: [Card] = []
-    var gold: Int = 6
+public class Player {
+    public var cards: [Card] = []
+    public var gold: Int = 6
 }
 
 public protocol Action {
@@ -199,8 +192,8 @@ public class Game {
     public let board: Board
     let player1Interactor: PlayerInteractor
     let player2Interactor: PlayerInteractor
-    var player1 = Player()
-    let player2 = Player()
+    public var player1 = Player()
+    public let player2 = Player()
     var currentPlayer: Player
     let resourceCalculator = ResourceCalculator()
     let shop = Shop()

@@ -1,11 +1,3 @@
-//
-//  CommandLineWondersTests.swift
-//  CommandLineWondersTests
-//
-//  Created by Marek Mościchowski on 31/07/2018.
-//  Copyright © 2018 Marek Mościchowski. All rights reserved.
-//
-
 import XCTest
 import Wonders_Mac
 
@@ -195,29 +187,22 @@ class BoardPresenterTests: XCTestCase {
         
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func testTwoCards() {
+        let output = MockOutput()
+        let card1 = TestCard(name: "First Test Card")
+        let card2 = TestCard(name: "Second Test Card")
+        let board = TestBoard(availableCards: [card1, card2])
+        let presenter = DefaultBoardPresenter(board: board, output: output)
+        presenter.presentAvailableCards()
+        XCTAssertEqual("1. First Test Card\n2. Second Test Card", output.printed)
+    }
 }//
-//    func testTwoCards() {
-//        let output = MockOutput()
-//        let card1 = Card(name: "First Test Card")
-//        let card2 = Card(name: "Second Test Card")
-//        let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [])
-//        let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
-//        let board = Board(cards: [cardOnBoard1, cardOnBoard2])
-//        let presenter = BoardPresenter(board: board, output: output)
-//        presenter.showAvailableCards()
-//        XCTAssertEqual("1. First Test Card\n2. Second Test Card", output.printed)
-//    }
-//
-//    func testTwoCardsWithDependency() {
-//        let output = MockOutput()
-//        let card1 = Card(name: "First Test Card")
-//        let card2 = Card(name: "Second Test Card")
-//
-//        let cardOnBoard2 = CardOnBoard(card: card2, hidden: false, descendants: [])
-//        let cardOnBoard1 = CardOnBoard(card: card1, hidden: false, descendants: [cardOnBoard2])
-//        let board = Board(cards: [cardOnBoard1, cardOnBoard2])
-//        let presenter = BoardPresenter(board: board, output: output)
-//        presenter.showAvailableCards()
-//        XCTAssertEqual("1. First Test Card", output.printed)
-//    }
-//}
+
+
+extension CardOnBoard {
+    convenience init(name: String, descendants: [CardOnBoard] = []) {
+        let card = TestCard(name: name)
+        self.init(card: card, hidden: false, descendants: descendants)
+    }
+}

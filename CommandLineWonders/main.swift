@@ -14,13 +14,18 @@ class ConsoleInteractor: PlayerInteractor {
     }
     func requestAction(game: Game, action: @escaping (Action) -> ()) {
         let presenter = OptionsPresenter(game: game, output: StandardOutput(), boardPresenter: DefaultBoardPresenter(board: game.board, output: StandardOutput()))
-        var string: String
+        var string: String?
         repeat {
             print("player = \(name)")
-            string = readLine()!
-            if let commandLineAction = presenter.action(for: string) {
+            print("1 gold \(game.player1.gold)")
+            print("2 gold \(game.player2.gold)")
+            
+            string = readLine()
+            if let string = string, let commandLineAction = presenter.action(for: string) {
                 action(commandLineAction)
                 break
+            } else {
+                print("command failed")
             }
         } while true
     }

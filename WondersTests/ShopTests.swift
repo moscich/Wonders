@@ -50,6 +50,11 @@ class ShopTests: XCTestCase {
         let cost = shop.resourceCost(Resource(clay: 2), player: player, oponentResource: Resource(clay: 5))
         XCTAssertEqual(cost, 2)
     }
+    
+    func testGold() {
+        let cost = shop.resourceCost(Resource(gold: 5), oponentResource: Resource())
+        XCTAssertEqual(cost, 5)
+    }
 }
 
 class TestCard: Card {

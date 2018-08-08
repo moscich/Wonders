@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7919450F211B4B4D008CD6F5 /* WondersTests_v2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7919450E211B4B4D008CD6F5 /* WondersTests_v2.swift */; };
-		79194511211B4B4D008CD6F5 /* Wonders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A2A210CCA3600141011 /* Wonders.framework */; };
-		79194517211B4B56008CD6F5 /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
 		797902F221159ABB0061875D /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
 		797902F42115FB9F0061875D /* cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F32115FB9F0061875D /* cards.json */; };
 		797902F52115FB9F0061875D /* cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F32115FB9F0061875D /* cards.json */; };
@@ -37,13 +34,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		79194512211B4B4D008CD6F5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 79876A21210CCA3600141011 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 79876A29210CCA3600141011;
-			remoteInfo = Wonders;
-		};
 		79876A35210CCA3600141011 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 79876A21210CCA3600141011 /* Project object */;
@@ -73,7 +63,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7919450C211B4B4C008CD6F5 /* WondersTests_v2.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WondersTests_v2.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7919450E211B4B4D008CD6F5 /* WondersTests_v2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WondersTests_v2.swift; sourceTree = "<group>"; };
 		79194510211B4B4D008CD6F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		797902F32115FB9F0061875D /* cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cards.json; sourceTree = "<group>"; };
@@ -105,14 +94,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		79194509211B4B4C008CD6F5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				79194511211B4B4D008CD6F5 /* Wonders.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		79876A27210CCA3600141011 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -195,7 +176,6 @@
 				79876A772110E52600141011 /* Wonders_Mac.framework */,
 				79876A7F2110E52600141011 /* Wonders_MacTests.xctest */,
 				79876A972110F38C00141011 /* CommandLineWondersTests.xctest */,
-				7919450C211B4B4C008CD6F5 /* WondersTests_v2.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -290,24 +270,6 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		7919450B211B4B4C008CD6F5 /* WondersTests_v2 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 79194516211B4B4D008CD6F5 /* Build configuration list for PBXNativeTarget "WondersTests_v2" */;
-			buildPhases = (
-				79194508211B4B4C008CD6F5 /* Sources */,
-				79194509211B4B4C008CD6F5 /* Frameworks */,
-				7919450A211B4B4C008CD6F5 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				79194513211B4B4D008CD6F5 /* PBXTargetDependency */,
-			);
-			name = WondersTests_v2;
-			productName = WondersTests_v2;
-			productReference = 7919450C211B4B4C008CD6F5 /* WondersTests_v2.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		79876A29210CCA3600141011 /* Wonders */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 79876A3E210CCA3600141011 /* Build configuration list for PBXNativeTarget "Wonders" */;
@@ -424,9 +386,6 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Marek Mościchowski";
 				TargetAttributes = {
-					7919450B211B4B4C008CD6F5 = {
-						CreatedOnToolsVersion = 9.4.1;
-					};
 					79876A29210CCA3600141011 = {
 						CreatedOnToolsVersion = 10.0;
 						LastSwiftMigration = 1000;
@@ -467,19 +426,11 @@
 				79876A762110E52600141011 /* Wonders_Mac */,
 				79876A7E2110E52600141011 /* Wonders_MacTests */,
 				79876A962110F38C00141011 /* CommandLineWondersTests */,
-				7919450B211B4B4C008CD6F5 /* WondersTests_v2 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7919450A211B4B4C008CD6F5 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		79876A28210CCA3600141011 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -523,15 +474,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		79194508211B4B4C008CD6F5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7919450F211B4B4D008CD6F5 /* WondersTests_v2.swift in Sources */,
-				79194517211B4B56008CD6F5 /* ShopTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		79876A26210CCA3600141011 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -591,11 +533,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		79194513211B4B4D008CD6F5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 79876A29210CCA3600141011 /* Wonders */;
-			targetProxy = 79194512211B4B4D008CD6F5 /* PBXContainerItemProxy */;
-		};
 		79876A36210CCA3600141011 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 79876A29210CCA3600141011 /* Wonders */;
@@ -609,47 +546,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		79194514211B4B4D008CD6F5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B3W946AZD7;
-				INFOPLIST_FILE = WondersTests_v2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.moscichowski.WondersTests-v2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		79194515211B4B4D008CD6F5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B3W946AZD7;
-				INFOPLIST_FILE = WondersTests_v2/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.moscichowski.WondersTests-v2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		79876A3C210CCA3600141011 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1030,15 +926,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		79194516211B4B4D008CD6F5 /* Build configuration list for PBXNativeTarget "WondersTests_v2" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				79194514211B4B4D008CD6F5 /* Debug */,
-				79194515211B4B4D008CD6F5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		79876A24210CCA3600141011 /* Build configuration list for PBXProject "Wonders" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
