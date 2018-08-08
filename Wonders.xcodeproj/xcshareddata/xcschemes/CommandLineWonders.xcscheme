@@ -43,16 +43,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "79876A32210CCA3600141011"
-               BuildableName = "WondersTests.xctest"
-               BlueprintName = "WondersTests"
-               ReferencedContainer = "container:Wonders.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"

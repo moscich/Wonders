@@ -31,3 +31,18 @@ class RandomCardProvider: CardProvider {
         }
     }
 }
+
+// old swift compatibility
+extension Array where Element == Int {
+    func shuffled() -> [Int] {
+        var result = self
+        for _ in 0...100 {
+            let first = Int(arc4random_uniform(UInt32(result.count)))
+            let second = Int(arc4random_uniform(UInt32(result.count)))
+            let elem = result[first]
+            result[first] = result[second]
+            result[second] = elem
+        }
+        return result
+    }
+}

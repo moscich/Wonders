@@ -309,15 +309,22 @@ public class Board {
             availableCard === card
         }) else { return false }
         for cardOnBoard in cards {
-            cardOnBoard?.descendants.removeAll(where: { descendant -> Bool in
-                descendant.card === card
+            guard let cardOnBoard = cardOnBoard else { continue }
+            cardOnBoard.descendants = cardOnBoard.descendants.filter({ descendant -> Bool in
+                descendant.card !== card
             })
         }
-        cards.removeAll { cardOnBoard -> Bool in
-            cardOnBoard?.card === card
-        }
-
+        cards.remove(card: card)
         return true
+    }
+}
+
+extension Array where Element == CardOnBoard? {
+    mutating func remove(card: Card) {
+        guard let index = (index { (cardOnBoard: CardOnBoard?) -> Bool in
+            card === cardOnBoard?.card
+        }) else { return }
+        remove(at: index)
     }
 }
 

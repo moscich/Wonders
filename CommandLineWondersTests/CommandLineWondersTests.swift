@@ -188,7 +188,7 @@ class BoardPresenterTests: XCTestCase {
         let testBoard = TestBoard(availableCards: [card1])
         let presenter: BoardPresenter = DefaultBoardPresenter(board: testBoard, output: output)
         let exp = expectation(description: "")
-        presenter.command("1") { action in
+        let _ = presenter.command("1") { action in
             XCTAssertTrue(action is CardTakeAction)
             exp.fulfill()
         }
