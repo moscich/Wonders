@@ -15,6 +15,7 @@
 		797902F52115FB9F0061875D /* cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F32115FB9F0061875D /* cards.json */; };
 		797902F72115FD340061875D /* one_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F62115FD340061875D /* one_card.json */; };
 		797902F9211602C40061875D /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F8211602C40061875D /* test.json */; };
+		798616D5211B522D002F9606 /* two_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 798616D4211B522C002F9606 /* two_cards.json */; };
 		79876A34210CCA3600141011 /* Wonders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A2A210CCA3600141011 /* Wonders.framework */; };
 		79876A3B210CCA3600141011 /* Wonders.h in Headers */ = {isa = PBXBuildFile; fileRef = 79876A2D210CCA3600141011 /* Wonders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79876A45210CCA6B00141011 /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
@@ -31,7 +32,6 @@
 		79876AA52114EDC400141011 /* OptionsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876AA32114EDBC00141011 /* OptionsPresenter.swift */; };
 		79AA8F6E211A23D200000095 /* ResourceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA8F6D211A23D200000095 /* ResourceCalculator.swift */; };
 		79AA8F6F211A23D200000095 /* ResourceCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AA8F6D211A23D200000095 /* ResourceCalculator.swift */; };
-		79FD1381211620B6001DFE53 /* two_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 79FD1380211620B6001DFE53 /* two_cards.json */; };
 		79FD1383211634CF001DFE53 /* RandomCardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD1382211634CF001DFE53 /* RandomCardProvider.swift */; };
 		79FD1384211634CF001DFE53 /* RandomCardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FD1382211634CF001DFE53 /* RandomCardProvider.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +79,7 @@
 		797902F32115FB9F0061875D /* cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = cards.json; sourceTree = "<group>"; };
 		797902F62115FD340061875D /* one_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = one_card.json; sourceTree = "<group>"; };
 		797902F8211602C40061875D /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
+		798616D4211B522C002F9606 /* two_cards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = two_cards.json; sourceTree = "<group>"; };
 		79876A2A210CCA3600141011 /* Wonders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wonders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79876A2D210CCA3600141011 /* Wonders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wonders.h; sourceTree = "<group>"; };
 		79876A2E210CCA3600141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -100,7 +101,6 @@
 		79876AA32114EDBC00141011 /* OptionsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsPresenter.swift; sourceTree = "<group>"; };
 		79AA8F6D211A23D200000095 /* ResourceCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCalculator.swift; sourceTree = "<group>"; };
 		79AA8F70211A39A000000095 /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		79FD1380211620B6001DFE53 /* two_cards.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = two_cards.json; path = "../../../../Creative Cloud Files/two_cards.json"; sourceTree = "<group>"; };
 		79FD1382211634CF001DFE53 /* RandomCardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCardProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,8 +219,8 @@
 				79876A3A210CCA3600141011 /* Info.plist */,
 				79876A44210CCA6B00141011 /* ShopTests.swift */,
 				797902F62115FD340061875D /* one_card.json */,
+				798616D4211B522C002F9606 /* two_cards.json */,
 				797902F8211602C40061875D /* test.json */,
-				79FD1380211620B6001DFE53 /* two_cards.json */,
 			);
 			path = WondersTests;
 			sourceTree = "<group>";
@@ -493,7 +493,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				797902F72115FD340061875D /* one_card.json in Resources */,
-				79FD1381211620B6001DFE53 /* two_cards.json in Resources */,
+				798616D5211B522D002F9606 /* two_cards.json in Resources */,
 				797902F9211602C40061875D /* test.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
