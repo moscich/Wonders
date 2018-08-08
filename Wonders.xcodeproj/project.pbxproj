@@ -13,6 +13,8 @@
 		797902F72115FD340061875D /* one_card.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F62115FD340061875D /* one_card.json */; };
 		797902F9211602C40061875D /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 797902F8211602C40061875D /* test.json */; };
 		798616D5211B522D002F9606 /* two_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 798616D4211B522C002F9606 /* two_cards.json */; };
+		798616D7211B71F4002F9606 /* MilitaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616D6211B71F4002F9606 /* MilitaryTests.swift */; };
+		798616D8211B7597002F9606 /* MilitaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616D6211B71F4002F9606 /* MilitaryTests.swift */; };
 		79876A34210CCA3600141011 /* Wonders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A2A210CCA3600141011 /* Wonders.framework */; };
 		79876A3B210CCA3600141011 /* Wonders.h in Headers */ = {isa = PBXBuildFile; fileRef = 79876A2D210CCA3600141011 /* Wonders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79876A45210CCA6B00141011 /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
@@ -69,6 +71,8 @@
 		797902F62115FD340061875D /* one_card.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = one_card.json; sourceTree = "<group>"; };
 		797902F8211602C40061875D /* test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		798616D4211B522C002F9606 /* two_cards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = two_cards.json; sourceTree = "<group>"; };
+		798616D6211B71F4002F9606 /* MilitaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilitaryTests.swift; sourceTree = "<group>"; };
+		798616D9211B7F3D002F9606 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		79876A2A210CCA3600141011 /* Wonders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wonders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79876A2D210CCA3600141011 /* Wonders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wonders.h; sourceTree = "<group>"; };
 		79876A2E210CCA3600141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -154,6 +158,7 @@
 		79876A20210CCA3600141011 = {
 			isa = PBXGroup;
 			children = (
+				798616D9211B7F3D002F9606 /* README.md */,
 				79AA8F70211A39A000000095 /* .travis.yml */,
 				79876A2C210CCA3600141011 /* Wonders */,
 				79876A37210CCA3600141011 /* WondersTests */,
@@ -201,6 +206,7 @@
 				797902F62115FD340061875D /* one_card.json */,
 				798616D4211B522C002F9606 /* two_cards.json */,
 				797902F8211602C40061875D /* test.json */,
+				798616D6211B71F4002F9606 /* MilitaryTests.swift */,
 			);
 			path = WondersTests;
 			sourceTree = "<group>";
@@ -488,6 +494,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798616D7211B71F4002F9606 /* MilitaryTests.swift in Sources */,
 				79876A45210CCA6B00141011 /* ShopTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,6 +513,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798616D8211B7597002F9606 /* MilitaryTests.swift in Sources */,
 				79AA8F6F211A23D200000095 /* ResourceCalculator.swift in Sources */,
 				79876A8E2110E58100141011 /* AllLogic.swift in Sources */,
 				79FD1384211634CF001DFE53 /* RandomCardProvider.swift in Sources */,
