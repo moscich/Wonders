@@ -101,7 +101,7 @@ class Military {
     }
     
     func move(player: Player, fields: Int) -> Event? {
-        guard let index = (players.firstIndex { (playerInner, points) -> Bool in
+        guard let index = (players.index { (playerInner, points) -> Bool in
             player === playerInner
         }) else { return nil }
         let opponentIndex = index == 0 ? 1 : 0
@@ -109,7 +109,7 @@ class Military {
         players[index] = (players[index].0, players[index].1 + fields)
         players[opponentIndex] = (players[opponentIndex].0, players[opponentIndex].1 - fields)
         
-        if let index = (events.firstIndex { event -> Bool in
+        if let index = (events.index { event -> Bool in
             event.2 === players[index].0 &&
                 players[index].1 >= event.1
         }) {
