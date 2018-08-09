@@ -166,8 +166,9 @@ public class Player {
     public var gold: Int = 6
 }
 
-public protocol Action {
-    
+public enum Action {
+    case sellCard(Card)
+    case takeCard(Card)
 }
 
 public protocol PlayerInteractor {
@@ -220,26 +221,23 @@ public class Game {
     private func actionHey() -> ((Action) -> ()) {
         return { [weak self] action in
             guard let `self` = self else { return }
-            
-            if let cardAction = action as? CardTakeAction {
-                let card = cardAction.requestedCard
+            switch action {
+            case .takeCard(let card):
                 let requiredResources = self.resourceCalculator.requiredResources(for: card, player: self.currentPlayer)
                 let player2Resources = self.resourceCalculator.concreteResources(in: self.opponent.cards)
                 let requiredGold = self.shop.resourceCost(requiredResources, oponentResource: player2Resources)
                 if self.currentPlayer.gold >= requiredGold {
-                    if self.board.claimCard(cardAction.requestedCard) {
+                    if self.board.claimCard(card) {
                         self.currentPlayer.cards.append(card)
                         self.currentPlayer.gold -= requiredGold
                         self.currentPlayer = self.opponent
                     }
                 }
-            } else if let sellAction = action as? CardSellAction {
-                if self.board.claimCard(sellAction.requestedCard) {
+            case .sellCard(let card):
+                if self.board.claimCard(card) {
                     self.currentPlayer.gold += 2
                     self.currentPlayer = self.opponent
                 }
-            } else if action is TestAction {
-                self.currentPlayer = self.opponent
             }
             
             self.currentInteractor.requestAction(game: self, action: self.actionHey())
@@ -263,22 +261,18 @@ public class Game {
     }
 }
 
-public struct CardTakeAction: Action {
+public struct CardTakeAction {
     public let requestedCard: Card
     public init(requestedCard: Card) {
         self.requestedCard = requestedCard
     }
 }
 
-public struct CardSellAction: Action {
+public struct CardSellAction {
     public let requestedCard: Card
     public init(requestedCard: Card) {
         self.requestedCard = requestedCard
     }
-}
-
-struct TestAction: Action {
-    
 }
 
 public class Board {
