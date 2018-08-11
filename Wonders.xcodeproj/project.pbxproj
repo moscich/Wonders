@@ -15,6 +15,17 @@
 		798616D5211B522D002F9606 /* two_cards.json in Resources */ = {isa = PBXBuildFile; fileRef = 798616D4211B522C002F9606 /* two_cards.json */; };
 		798616D7211B71F4002F9606 /* MilitaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616D6211B71F4002F9606 /* MilitaryTests.swift */; };
 		798616D8211B7597002F9606 /* MilitaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616D6211B71F4002F9606 /* MilitaryTests.swift */; };
+		798616DB211DE68F002F9606 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616DA211DE68F002F9606 /* GameTests.swift */; };
+		798616DC211DE6AE002F9606 /* GameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616DA211DE68F002F9606 /* GameTests.swift */; };
+		798616DE211DE9C6002F9606 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616DD211DE9C6002F9606 /* Game.swift */; };
+		798616DF211DE9CA002F9606 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616DD211DE9C6002F9606 /* Game.swift */; };
+		798616E1211DEBD0002F9606 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E0211DEBD0002F9606 /* Shop.swift */; };
+		798616E2211DEBD0002F9606 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E0211DEBD0002F9606 /* Shop.swift */; };
+		798616E4211E138D002F9606 /* WonderCardsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E3211E138D002F9606 /* WonderCardsTests.swift */; };
+		798616E6211F0504002F9606 /* WonderShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E5211F0504002F9606 /* WonderShop.swift */; };
+		798616E7211F0504002F9606 /* WonderShop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E5211F0504002F9606 /* WonderShop.swift */; };
+		798616E9211F0533002F9606 /* FeatureResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E8211F0533002F9606 /* FeatureResolver.swift */; };
+		798616EA211F0533002F9606 /* FeatureResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 798616E8211F0533002F9606 /* FeatureResolver.swift */; };
 		79876A34210CCA3600141011 /* Wonders.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79876A2A210CCA3600141011 /* Wonders.framework */; };
 		79876A3B210CCA3600141011 /* Wonders.h in Headers */ = {isa = PBXBuildFile; fileRef = 79876A2D210CCA3600141011 /* Wonders.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		79876A45210CCA6B00141011 /* ShopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79876A44210CCA6B00141011 /* ShopTests.swift */; };
@@ -73,6 +84,12 @@
 		798616D4211B522C002F9606 /* two_cards.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = two_cards.json; sourceTree = "<group>"; };
 		798616D6211B71F4002F9606 /* MilitaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilitaryTests.swift; sourceTree = "<group>"; };
 		798616D9211B7F3D002F9606 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		798616DA211DE68F002F9606 /* GameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTests.swift; sourceTree = "<group>"; };
+		798616DD211DE9C6002F9606 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		798616E0211DEBD0002F9606 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
+		798616E3211E138D002F9606 /* WonderCardsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderCardsTests.swift; sourceTree = "<group>"; };
+		798616E5211F0504002F9606 /* WonderShop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WonderShop.swift; sourceTree = "<group>"; };
+		798616E8211F0533002F9606 /* FeatureResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureResolver.swift; sourceTree = "<group>"; };
 		79876A2A210CCA3600141011 /* Wonders.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Wonders.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		79876A2D210CCA3600141011 /* Wonders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Wonders.h; sourceTree = "<group>"; };
 		79876A2E210CCA3600141011 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -194,6 +211,10 @@
 				797902F32115FB9F0061875D /* cards.json */,
 				79FD1382211634CF001DFE53 /* RandomCardProvider.swift */,
 				79AA8F6D211A23D200000095 /* ResourceCalculator.swift */,
+				798616DD211DE9C6002F9606 /* Game.swift */,
+				798616E0211DEBD0002F9606 /* Shop.swift */,
+				798616E5211F0504002F9606 /* WonderShop.swift */,
+				798616E8211F0533002F9606 /* FeatureResolver.swift */,
 			);
 			path = Wonders;
 			sourceTree = "<group>";
@@ -207,6 +228,8 @@
 				798616D4211B522C002F9606 /* two_cards.json */,
 				797902F8211602C40061875D /* test.json */,
 				798616D6211B71F4002F9606 /* MilitaryTests.swift */,
+				798616DA211DE68F002F9606 /* GameTests.swift */,
+				798616E3211E138D002F9606 /* WonderCardsTests.swift */,
 			);
 			path = WondersTests;
 			sourceTree = "<group>";
@@ -484,9 +507,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798616E6211F0504002F9606 /* WonderShop.swift in Sources */,
 				79AA8F6E211A23D200000095 /* ResourceCalculator.swift in Sources */,
 				79876A712110E4A000141011 /* AllLogic.swift in Sources */,
+				798616E9211F0533002F9606 /* FeatureResolver.swift in Sources */,
 				79FD1383211634CF001DFE53 /* RandomCardProvider.swift in Sources */,
+				798616E1211DEBD0002F9606 /* Shop.swift in Sources */,
+				798616DE211DE9C6002F9606 /* Game.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +521,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798616E4211E138D002F9606 /* WonderCardsTests.swift in Sources */,
 				798616D7211B71F4002F9606 /* MilitaryTests.swift in Sources */,
+				798616DB211DE68F002F9606 /* GameTests.swift in Sources */,
 				79876A45210CCA6B00141011 /* ShopTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,9 +542,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798616E7211F0504002F9606 /* WonderShop.swift in Sources */,
 				798616D8211B7597002F9606 /* MilitaryTests.swift in Sources */,
+				798616DF211DE9CA002F9606 /* Game.swift in Sources */,
 				79AA8F6F211A23D200000095 /* ResourceCalculator.swift in Sources */,
+				798616E2211DEBD0002F9606 /* Shop.swift in Sources */,
 				79876A8E2110E58100141011 /* AllLogic.swift in Sources */,
+				798616EA211F0533002F9606 /* FeatureResolver.swift in Sources */,
 				79FD1384211634CF001DFE53 /* RandomCardProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,6 +558,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				797902F221159ABB0061875D /* ShopTests.swift in Sources */,
+				798616DC211DE6AE002F9606 /* GameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

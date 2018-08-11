@@ -4,7 +4,7 @@ import XCTest
 class ShopTests: XCTestCase {
     var shop: Shop!
     override func setUp() {
-        shop = Shop()
+        shop = DefaultShop()
     }
     
     func testOneWoodCost_noCards() {
@@ -85,7 +85,7 @@ class TestCard: Card {
 
 class ResourceCalculatorTests: XCTestCase {
     func testResourceSummary() {
-        let calculator = ResourceCalculator()
+        let calculator = DefaultResourceCalculator()
         
         let woodCard = TestCard(providedResource: Resource(wood: 2))
         let clayCard = TestCard(providedResource: Resource(clay: 1))
@@ -94,127 +94,13 @@ class ResourceCalculatorTests: XCTestCase {
     }
     
     func testRequiredResources() {
-        let calculator = ResourceCalculator()
+        let calculator = DefaultResourceCalculator()
         let card = TestCard(cost: Resource(wood: 1, stones: 3, clay: 2))
         let player1 = Player()
         player1.cards = [TestCard(providedResource: Resource(wood: 3, stones: 1))]
         let requiredResources = calculator.requiredResources(for: card, player: player1)
         XCTAssertEqual(requiredResources, Resource(stones: 2, clay: 2))
     }
-}
-
-class GameTests: XCTestCase {
-    func testAskFirstInteractorForAction() {
-        let playerInteractor = TestPlayerInteractor()
-        _ = Game(player1: playerInteractor, player2: TestPlayerInteractor())
-        XCTAssertTrue(playerInteractor.wasAskedForAction)
-    }
-    
-//    func testPlayersTakeActionsOneAfterAnother() {
-//        let player1Interactor = TestPlayerInteractor()
-//        let player2Interactor = TestPlayerInteractor()
-//        let game = Game(player1: player1Interactor, player2: player2Interactor)
-//        XCTAssertTrue(player1Interactor.wasAskedForAction)
-//        XCTAssertFalse(player2Interactor.wasAskedForAction)
-//        player1Interactor.receivedSomePlayerInteraction(interaction: TestAction())
-//        XCTAssertTrue(player2Interactor.wasAskedForAction)
-//
-//        player1Interactor.wasAskedForAction = false
-//        player2Interactor.wasAskedForAction = false
-//
-//        player2Interactor.receivedSomePlayerInteraction(interaction: TestAction())
-//
-//        XCTAssertTrue(player1Interactor.wasAskedForAction)
-//        print(game)
-//    }
-//
-    func testCardTakeAction() {
-        let player1Interactor = TestPlayerInteractor()
-        let player2Interactor = TestPlayerInteractor()
-        let testCard = TestCard(cost: Resource(wood: 1))
-        let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
-        
-        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-        
-        player1Interactor.receivedSomePlayerInteraction(interaction: .takeCard(testCard))
-        XCTAssertEqual(game.player1.cards.count, 1)
-        XCTAssertEqual(game.player1.gold, 4)
-        XCTAssertTrue(game.board.availableCards.isEmpty)
-    }
-    //
-    func testCardTakeAction_v2() {
-        let player1Interactor = TestPlayerInteractor()
-        let player2Interactor = TestPlayerInteractor()
-        let testCard = TestCard(cost: Resource(wood: 2))
-        let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
-        
-        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-        
-        player1Interactor.receivedSomePlayerInteraction(interaction: .takeCard(testCard))
-        XCTAssertEqual(game.player1.cards.count, 1)
-        XCTAssertEqual(game.player1.gold, 2)
-        XCTAssertTrue(game.board.availableCards.isEmpty)
-    }
-    
-    func testCardOnePlayerAfterAnother() {
-        let player1Interactor = TestPlayerInteractor()
-        let player2Interactor = TestPlayerInteractor()
-        let testCard = TestCard(cost: Resource(wood: 2))
-        let testCard2 = TestCard(cost: Resource(stones: 1))
-        let cards = [CardOnBoard(card: testCard, hidden: false, descendants: []),
-                     CardOnBoard(card: testCard2, hidden: false, descendants: [])]
-        let testBoard = Board(cards: cards)
-        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-        
-        player1Interactor.receivedSomePlayerInteraction(interaction: .takeCard(testCard))
-        XCTAssertEqual(game.player1.cards.count, 1)
-        XCTAssertEqual(game.player1.gold, 2)
-        XCTAssertEqual(game.board.availableCards.count, 1)
-        
-        player2Interactor.receivedSomePlayerInteraction(interaction: .takeCard(testCard2))
-        XCTAssertEqual(game.player2.cards.count, 1)
-        XCTAssertEqual(game.player2.gold, 4)
-        XCTAssertTrue(game.board.availableCards.isEmpty)
-    }
-    
-    func testTryTakeTooExpensiveCard() {
-        let player1Interactor = TestPlayerInteractor()
-        let player2Interactor = TestPlayerInteractor()
-        let testCard = TestCard(cost: Resource(wood: 4))
-        let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
-        
-        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-        
-        player1Interactor.wasAskedForAction = false
-        player1Interactor.receivedSomePlayerInteraction(interaction: .takeCard(testCard))
-        XCTAssertEqual(game.player1.cards.count, 0)
-        XCTAssertEqual(game.player1.gold, 6)
-        XCTAssertEqual(game.board.availableCards.count, 1)
-        XCTAssertTrue(player1Interactor.wasAskedForAction)
-    }
-    
-    func testSellCardAction() {
-        let player1Interactor = TestPlayerInteractor()
-        let player2Interactor = TestPlayerInteractor()
-        let testCard = TestCard(cost: Resource(wood: 4))
-        let testBoard = Board(cards: [CardOnBoard(card: testCard, hidden: false, descendants: [])])
-        
-        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-        
-        player1Interactor.receivedSomePlayerInteraction(interaction: .sellCard(testCard))
-        XCTAssertEqual(game.player1.cards.count, 0)
-        XCTAssertEqual(game.player1.gold, 8)
-        XCTAssertTrue(game.board.availableCards.isEmpty)
-        XCTAssertTrue(player2Interactor.wasAskedForAction)
-    }
-    
-//    func testBuildWonderAction() {
-//        let player1Interactor = TestPlayerInteractor()
-//        let player2Interactor = TestPlayerInteractor()
-//        let testBoard = Board(cards: [CardOnBoard(name: "Test")])
-//        let game = Game(player1: player1Interactor, player2: player2Interactor, boardFactory: TestBoardFactory(board: testBoard))
-////        player1Interactor.receivedSomePlayerInteraction(interaction: CardSellAction(requestedCard: testCard))
-//    }
 }
 
 class TestBoardFactory: BoardFactory {
@@ -289,6 +175,10 @@ extension CardOnBoard {
     convenience init(name: String, descendants: [CardOnBoard] = []) {
         let card = TestCard(name: name)
         self.init(card: card, hidden: false, descendants: descendants)
+    }
+    
+    convenience init(card: Card) {
+        self.init(card: card, hidden: false, descendants: [])
     }
 }
 

@@ -1,6 +1,11 @@
 import Foundation
 
-class ResourceCalculator {
+protocol ResourceCalculator {
+    func concreteResources(in cards: [Card]) -> Resource    
+    func requiredResources(for card: Card, player: Player) -> Resource
+}
+
+class DefaultResourceCalculator: ResourceCalculator {
     func concreteResources(in cards: [Card]) -> Resource {
         return cards.reduce(Resource(), { (result: Resource, card) -> Resource in
             result + card.providedResource

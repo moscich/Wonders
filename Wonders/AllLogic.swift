@@ -1,43 +1,12 @@
 import Foundation
 
-class Shop {
-    func resourceCost(_ resource: Resource, player: Player? = nil, oponentResource: Resource) -> Int {
-        let features = (player?.cards.reduce(into: []) { (res, card) in
-            res.append(contentsOf: card.features)
-        }) ?? []
-        
-        var woodCost = 2 + oponentResource.wood
-        var stoneCost = 2 + oponentResource.stones
-        var clayCost = 2 + oponentResource.clay
-        
-        for feature in features {
-            switch feature {
-            case .woodWerehouse:
-                woodCost = 1
-            case .stoneWerehouse:
-                stoneCost = 1
-            case .clayWerehouse:
-                clayCost = 1
-            default:break
-            }
-        }
-
-        return resource.wood * woodCost +
-            resource.stones * stoneCost +
-            resource.clay * clayCost +
-            resource.papyrus * (2 + oponentResource.papyrus) +
-            resource.glass * (2 + oponentResource.glass) +
-            resource.gold
-    }
-}
-
 public protocol Card: class {
     var features: [CardFeature] { get }
     var cost: Resource { get }
     var name: String { get }
 }
 
-public enum CardFeature: Decodable {
+public enum CardFeature: Decodable, Equatable {
     enum CodingKeys: String, CodingKey {
         case wood
         case stones
@@ -60,6 +29,9 @@ public enum CardFeature: Decodable {
     case woodWerehouse
     case stoneWerehouse
     case clayWerehouse
+    case gainGold(gold: Int)
+    case removeGold(gold: Int)
+    case takeExtraTurn
 }
 
 public class DefaultCard: Card, Decodable {
@@ -164,11 +136,23 @@ func -(left: Resource, rigth: Resource) -> Resource {
 public class Player {
     public var cards: [Card] = []
     public var gold: Int = 6
+    public var wonders: [Wonder] = [Wonder(), Wonder(), Wonder(), Wonder()]
+}
+
+public class Wonder {
+    let cost: Resource
+    var built = false
+    let features: [CardFeature]
+    init(features: [CardFeature] = [], cost: Resource = Resource()) {
+        self.features = features
+        self.cost = cost
+    }
 }
 
 public enum Action {
     case sellCard(Card)
     case takeCard(Card)
+    case buildWonder(Wonder, Card)
 }
 
 public protocol PlayerInteractor {
@@ -186,78 +170,6 @@ class TestPlayerInteractor: PlayerInteractor {
     
     func receivedSomePlayerInteraction(interaction: Action) {
         action?(interaction)
-    }
-}
-
-public class Game {
-    public let board: Board
-    let player1Interactor: PlayerInteractor
-    let player2Interactor: PlayerInteractor
-    public var player1 = Player()
-    public let player2 = Player()
-    var currentPlayer: Player
-    let resourceCalculator = ResourceCalculator()
-    let shop = Shop()
-    let boardFactory: BoardFactory
-    
-    init(player1: PlayerInteractor, player2: PlayerInteractor, boardFactory: BoardFactory) {
-        self.player1Interactor = player1
-        self.player2Interactor = player2
-        self.boardFactory = boardFactory
-        self.board = boardFactory.firstEpohBoard
-        currentPlayer = self.player1
-        player1.requestAction(game: self, action: actionHey())
-    }
-    
-    convenience public init(player1: PlayerInteractor, player2: PlayerInteractor, cardProvider: CardProvider) {
-        self.init(player1: player1, player2: player2, boardFactory: DefaultBoardFactory(cardProvider: cardProvider))
-    }
-    
-    convenience public init(player1: PlayerInteractor, player2: PlayerInteractor) {
-        let url = Bundle(for: type(of: self)).url(forResource: "cards", withExtension: "json")!
-        self.init(player1: player1, player2: player2, boardFactory: DefaultBoardFactory(cardProvider: RandomCardProvider(file: url)))
-    }
-    
-    private func actionHey() -> ((Action) -> ()) {
-        return { [weak self] action in
-            guard let `self` = self else { return }
-            switch action {
-            case .takeCard(let card):
-                let requiredResources = self.resourceCalculator.requiredResources(for: card, player: self.currentPlayer)
-                let player2Resources = self.resourceCalculator.concreteResources(in: self.opponent.cards)
-                let requiredGold = self.shop.resourceCost(requiredResources, oponentResource: player2Resources)
-                if self.currentPlayer.gold >= requiredGold {
-                    if self.board.claimCard(card) {
-                        self.currentPlayer.cards.append(card)
-                        self.currentPlayer.gold -= requiredGold
-                        self.currentPlayer = self.opponent
-                    }
-                }
-            case .sellCard(let card):
-                if self.board.claimCard(card) {
-                    self.currentPlayer.gold += 2
-                    self.currentPlayer = self.opponent
-                }
-            }
-            
-            self.currentInteractor.requestAction(game: self, action: self.actionHey())
-        }
-    }
-    
-    private var currentInteractor: PlayerInteractor {
-        if currentPlayer === player1 {
-            return player1Interactor
-        } else {
-            return player2Interactor
-        }
-    }
-    
-    private var opponent: Player {
-        if currentPlayer === player1 {
-            return player2
-        } else {
-            return player1
-        }
     }
 }
 
