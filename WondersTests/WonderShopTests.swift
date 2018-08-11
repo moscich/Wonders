@@ -1,7 +1,7 @@
 import XCTest
 @testable import Wonders
 
-class WonderCardTests: XCTestCase {
+class WonderShopTests: XCTestCase {
     func testBuyWonder() {
         let card = TestCard()
         let state = GameState(board: Board(cards: [CardOnBoard(card: card)]))
@@ -61,34 +61,9 @@ class MockFeatureResolver: FeatureResolver {
     }
 }
 
-class FeatureResolverTests: XCTestCase {
-    func testGainGold() {
-        let state = GameState(board: Board(cards: []))
-        let resolver = DefaultFeatureResolver(state: state)
-        resolver.execute(features: [.gainGold(gold: 3)])
-        XCTAssertEqual(state.player1.gold , 9)
-    }
-}
-
-class DefaultFeatureResolver: FeatureResolver {
-    let state: GameState
-    init(state: GameState) {
-        self.state = state
-    }
-    
-    func execute(features: [CardFeature]) {
-        guard let feature = features.first else { return }
-        switch feature {
-        case .gainGold(gold: let gold):
-            state.currentPlayer.gold += gold
-        default:
-            break
-        }
-    }
-}
-
 extension WonderShop {
     convenience init(state: GameState, shop: Shop) {
-        self.init(state: state, shop: shop, featureResolver: DefaultFeatureResolver(state: state))
+        let featureResolver = DefaultFeatureResolver(state: state, military: Military(player1: state.player1, player2: state.player2))
+        self.init(state: state, shop: shop, featureResolver: featureResolver)
     }
 }

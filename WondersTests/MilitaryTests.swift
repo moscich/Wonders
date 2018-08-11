@@ -16,48 +16,61 @@ class MilitaryTests: XCTestCase {
     }
     
     func testMoveOnePosition() {
-        var event = military.move(player: player1, fields: 1)
-        XCTAssertEqual(military.playerPosition(player1), 1)
-        XCTAssertEqual(military.playerPosition(player2), -1)
-        XCTAssertNil(event)
-        event = military.move(player: player2, fields: 1)
-        XCTAssertEqual(military.playerPosition(player1), 0)
-        XCTAssertEqual(military.playerPosition(player2), 0)
-        XCTAssertNil(event)
+        military.move(player: player1, fields: 1)
+        XCTAssertEqual(military.position, 1)
+        XCTAssertNil(military.claimPendingEvent())
+        military.move(player: player2, fields: 1)
+        XCTAssertEqual(military.position, 0)
+        XCTAssertNil(military.claimPendingEvent())
     }
     
     func testMilitaryGoldEvent() {
-        guard let event = military.move(player: player1, fields: 3) else { XCTFail(); return }
+        military.move(player: player1, fields: 3)
+        let event = military.claimPendingEvent()
         AssertEventsEqual(event, .takeGold(2))
+        XCTAssertNil(military.claimPendingEvent())
     }
     
     func testMilitaryGoldEventOnlyOncePerPlayer() {
-        _ = military.move(player: player1, fields: 3)
-        _ = military.move(player: player2, fields: 3)
-        let event = military.move(player: player1, fields: 3)
+        military.move(player: player1, fields: 3)
+        _ = military.claimPendingEvent()
+        military.move(player: player2, fields: 3)
+        _ = military.claimPendingEvent()
+        military.move(player: player1, fields: 3)
+        let event = military.claimPendingEvent()
         XCTAssertNil(event)
     }
     
     func testAllEvents() {
-        var event = military.move(player: player1, fields: 3)
+        military.move(player: player1, fields: 3)
+        var event = military.claimPendingEvent()
         AssertEventsEqual(event, .takeGold(2))
-        event = military.move(player: player1, fields: 1)
+        military.move(player: player1, fields: 1)
+        event = military.claimPendingEvent()
         XCTAssertNil(event)
-        event = military.move(player: player1, fields: 2)
+        military.move(player: player1, fields: 2)
+        event = military.claimPendingEvent()
         AssertEventsEqual(event, .takeGold(5))
-        event = military.move(player: player2, fields: 2)
+        military.move(player: player2, fields: 2)
+        event = military.claimPendingEvent()
         XCTAssertNil(event)
-        event = military.move(player: player1, fields: 3)
+        military.move(player: player1, fields: 3)
+        event = military.claimPendingEvent()
         XCTAssertNil(event)
-        event = military.move(player: player1, fields: 2)
+        military.move(player: player1, fields: 2)
+        event = military.claimPendingEvent()
         AssertEventsEqual(event, .militaryWin)
-        event = military.move(player: player2, fields: 9)
+        military.move(player: player2, fields: 9)
+        event = military.claimPendingEvent()
         XCTAssertNil(event)
-        event = military.move(player: player2, fields: 3)
+        military.move(player: player2, fields: 3)
+        event = military.claimPendingEvent()
         AssertEventsEqual(event, .takeGold(2))
-        event = military.move(player: player2, fields: 3)
+        military.move(player: player2, fields: 3)
+        event = military.claimPendingEvent()
         AssertEventsEqual(event, .takeGold(5))
-        event = military.move(player: player2, fields: 3)
+        military.move(player: player2, fields: 3)
+        event = military.claimPendingEvent()
         AssertEventsEqual(event, .militaryWin)
     }
 }
@@ -70,54 +83,5 @@ func AssertEventsEqual(
         XCTAssertEqual(event1, event2, file: file, line: line)
     } else {
         XCTFail("Expected Not Nil", file: file, line: line)
-    }
-}
-
-class Military {
-    enum Event: Equatable {
-        case takeGold(Int)
-        case militaryWin
-    }
-
-    private var players: [(Player, Int)]
-    private var events: [(Event, Int, Player)]
-    init(player1: Player, player2: Player) {
-        players = [(player1, 0), (player2, 0)]
-        
-        events = [
-            (Event.takeGold(2), 3, player1),
-            (Event.takeGold(5), 6, player1),
-            (Event.takeGold(2), 3, player2),
-            (Event.takeGold(5), 6, player2),
-            (Event.militaryWin, 9, player1),
-            (Event.militaryWin, 9, player2)
-        ]
-    }
-    
-    func playerPosition(_ player: Player) -> Int {
-        return players.filter { arg -> Bool in
-            player === arg.0
-        }.first!.1
-    }
-    
-    func move(player: Player, fields: Int) -> Event? {
-        guard let index = (players.index { (playerInner, points) -> Bool in
-            player === playerInner
-        }) else { return nil }
-        let opponentIndex = index == 0 ? 1 : 0
-        
-        players[index] = (players[index].0, players[index].1 + fields)
-        players[opponentIndex] = (players[opponentIndex].0, players[opponentIndex].1 - fields)
-        
-        if let index = (events.index { event -> Bool in
-            event.2 === players[index].0 &&
-                players[index].1 >= event.1
-        }) {
-            let event = events[index].0
-            events.remove(at: index)
-            return event
-        }
-
-        return nil
     }
 }

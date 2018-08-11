@@ -32,6 +32,8 @@ public enum CardFeature: Decodable, Equatable {
     case gainGold(gold: Int)
     case removeGold(gold: Int)
     case takeExtraTurn
+    case addMilitary(shield: Int)
+    case removeCard
 }
 
 public class DefaultCard: Card, Decodable {
