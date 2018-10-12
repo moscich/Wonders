@@ -9,15 +9,17 @@ class WonderShop {
         self.featureResolver = featureResolver
     }
     
-    func buyWonder(_ wonder: Wonder, with card: Card) {
+    func buyWonder(_ wonder: Wonder, with card: Card) -> Bool {
         let cost = shop.wonderCost(wonder, for: state.currentPlayer)
         if state.player1.gold > cost {
             if state.board.claimCard(card) {
-                featureResolver.execute(features: wonder.features)
+                let success = featureResolver.execute(features: wonder.features)
                 state.player1.gold -= cost
                 state.currentPlayer = state.opponent
                 wonder.built = true
+                return success
             }
         }
+        return false
     }
 }

@@ -42,19 +42,43 @@ class WonderShopTests: XCTestCase {
         XCTAssertNil(resolver.features)
     }
     
-    func testResolveFeatures() {
+    func testResolveFeaturesSuccess() {
         let card = TestCard()
         let state = GameState(board: Board(cards: [CardOnBoard(card: card)]))
-        let shop = MockShop(cost: 0)
+        let shop = MockShop(cost: 2)
         let resolver = MockFeatureResolver()
         let wonderShop = WonderShop(state: state, shop: shop, featureResolver: resolver)
         let wonder = Wonder(features: [.gainGold(gold: 3)])
-        wonderShop.buyWonder(wonder, with: card)
+        let success = wonderShop.buyWonder(wonder, with: card)
+        XCTAssertEqual(state.player1.gold, 4)
+        XCTAssertTrue(state.currentPlayer === state.player2)
+        XCTAssertTrue(wonder.built)
+        XCTAssertTrue(success)
+        XCTAssertEqual(resolver.features, [CardFeature.gainGold(gold: 3)])
+    }
+    
+    func testResolveFeaturesFailure() {
+        let card = TestCard()
+        let state = GameState(board: Board(cards: [CardOnBoard(card: card)]))
+        let shop = MockShop(cost: 0)
+        let resolver = MockFeatureResolver(success: false)
+        let wonderShop = WonderShop(state: state, shop: shop, featureResolver: resolver)
+        let wonder = Wonder(features: [.gainGold(gold: 3)])
+        let success = wonderShop.buyWonder(wonder, with: card)
+        XCTAssertTrue(success)
         XCTAssertEqual(resolver.features, [CardFeature.gainGold(gold: 3)])
     }
 }
 
 class MockFeatureResolver: FeatureResolver {
+    let success: Bool
+    init(success: Bool = true) {
+        self.success = success
+    }
+    func execute(features: [CardFeature], targetCard: Card) -> Bool {
+        return false
+    }
+    
     var features: [CardFeature]?
     func execute(features: [CardFeature]) {
         self.features = features

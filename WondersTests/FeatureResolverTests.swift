@@ -47,13 +47,45 @@ class FeatureResolverTests: XCTestCase {
     }
     
     func testRemoveCard() {
-        let wond = Wonder(features: [CardFeature.removeCard], cost: Resource())
-        let w = Action.buildWonder(wond, TestCard())
-        resolver.execute(features: [.removeCard])
+        let card = TestCard()
+        state.player2.cards = [TestCard(), card, TestCard()]
+        let success = resolver.execute(features: [.removeCard], targetCard: card)
+        XCTAssertEqual(state.player2.cards.count, 2)
+        XCTAssertTrue(success)
+    }
+    
+    func testRemoveCard_Failed() {
+        let card = TestCard()
+        state.player2.cards = [TestCard(), TestCard()]
+        let success = resolver.execute(features: [.removeCard], targetCard: card)
+        XCTAssertEqual(state.player2.cards.count, 2)
+        XCTAssertFalse(success)
     }
 }
 
 class DefaultFeatureResolver: FeatureResolver {
+    func execute(features: [CardFeature], targetCard: Card) -> Bool {
+        let sortedFeatures = features.sorted { left, right -> Bool in
+            right == .takeExtraTurn
+        }
+        for case let feature in sortedFeatures {
+            switch feature {
+            case .removeCard:
+                if (state.player2.cards.contains(where: { card -> Bool in
+                    card === targetCard
+                })) == false {
+                    return false
+                }
+                state.player2.cards.removeAll { card -> Bool in
+                    card === targetCard
+                }
+            default:
+                break
+            }
+        }
+        return true
+    }
+    
     let state: GameState
     let military: Military
     init(state: GameState, military: Military) {
